@@ -18,15 +18,33 @@ export default defineConfig({
 
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'APIs', link: '/apis/text-generation/' }
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Introduction',
+        collapsed: false,
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'What is Libertai?', link: '/what-is-libertai' },
+          { text: 'Architecture', link: '/architecture' }
+        ],
+      },
+      {
+        text: "APIs",
+        collapsed: false,
+        link: "/apis/",
+        items: [
+          {
+            text: "Text Generation",
+            link: "/apis/text-generation/",
+            items: [
+              { text: "Available models", link: "/apis/text-generation/#available-models" },
+              { text: "Llama-like API", link: "/apis/text-generation/llama" },
+              { text: "OpenAI-compatible API", link: "/apis/text-generation/openai" },
+              { text: "Prompting styles", link: "/apis/text-generation/prompting" }
+            ]
+          },
         ]
       }
     ],

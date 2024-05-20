@@ -6,11 +6,11 @@ hero:
   tagline: Private AI Secured by Blockchain
   actions:
     - theme: brand
-      text: CTA 1
-      link: /none
+      text: What is Libertai?
+      link: /what-is-libertai
     - theme: alt
-      text: CTA 2
-      link: /none
+      text: APIs
+      link: /apis/text-generation/
 
 features:
   - title: Feature A
@@ -20,9 +20,3 @@ features:
   - title: Feature C
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-
-<style>
-:root {
-  --vp-home-hero-name-color: #644DF9;
-}
-</style>
