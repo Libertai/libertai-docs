@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
 And run it:
 ```bash
-$ python program.py
+python program.py
 ```
 
 #### Use with langchain
