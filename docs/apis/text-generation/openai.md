@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # OpenAI-compatible API
 
 Some models provide OpenAI API-compatible endpoints:
