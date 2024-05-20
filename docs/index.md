@@ -10,7 +10,7 @@ hero:
       link: /what-is-libertai
     - theme: alt
       text: APIs
-      link: /apis/text-generation/
+      link: /apis/
 
 features:
   - title: Feature A
