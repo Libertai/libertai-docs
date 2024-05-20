@@ -14,7 +14,7 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: false,
-    logo: { light: '/logo_light.png', dark: '/logo_dark.png'}, // TODO: Replace light logo with a version with spaces removed
+    logo: { light: '/logo_light.png', dark: '/logo_dark.png'},
 
     nav: [
       { text: 'Home', link: '/' },
