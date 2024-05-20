@@ -1,18 +1,16 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
 hero:
-  name: "Libertai"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: Libertai
+  tagline: Private AI Secured by Blockchain
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: CTA 1
+      link: /none
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: CTA 2
+      link: /none
 
 features:
   - title: Feature A
@@ -23,3 +21,8 @@ features:
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
+<style>
+:root {
+  --vp-home-hero-name-color: #644DF9;
+}
+</style>
