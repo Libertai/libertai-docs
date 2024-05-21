@@ -39,7 +39,7 @@ Below is an instruction that describes a task, paired with an input that provide
 ### Response:
 ```
 
-Please note that the input part is optionnal. There has been variants of it for chats too. Where each chat participant has its name prepended with "### " and replaces the Instruction/Input/Response pattern:
+Please note that the input part is optional. There has been variants of it for chats too. Where each chat participant has its name prepended with "### " and replaces the Instruction/Input/Response pattern:
 
 ```
 {system}
