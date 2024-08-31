@@ -2,11 +2,11 @@
 layout: home
 
 hero:
-  name: Libertai
+  name: LibertAI
   tagline: Private AI Secured by Blockchain
   actions:
     - theme: brand
-      text: What is Libertai?
+      text: What is LibertAI?
       link: /what-is-libertai
     - theme: alt
       text: APIs

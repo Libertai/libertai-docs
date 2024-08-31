@@ -1,6 +1,6 @@
 # Architecture
 
-Libertai works on top of the [aleph.im network](https://aleph.im). It uses its on-demand virtual machines (serverless).
+LibertAI works on top of the [aleph.im network](https://aleph.im). It uses its on-demand virtual machines (serverless).
 When you do a call to the API, it's going to one of the load balancers of the network that distributes your request to one of the available CRN (computing resource nodes, you can also call the API directly on one).
 This CRN then looks at the path (or domain) and redirects it to a specific virtual machine.
 

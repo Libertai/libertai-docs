@@ -1,8 +1,8 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "Libertai Documentation",
-  description: "Libertai.io official documentation",
+  title: "LibertAI Documentation",
+  description: "LibertAI.io official documentation",
 
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }]
@@ -26,7 +26,7 @@ export default defineConfig({
         text: 'Introduction',
         collapsed: false,
         items: [
-          { text: 'What is Libertai?', link: '/what-is-libertai' },
+          { text: 'What is LibertAI?', link: '/what-is-libertai' },
           { text: 'Architecture', link: '/architecture' }
         ],
       },
@@ -45,6 +45,22 @@ export default defineConfig({
               { text: "Prompting styles", link: "/apis/text-generation/prompting" }
             ]
           },
+        ]
+      },
+      {
+        text: "Chat UI",
+        collapsed: false,
+        items: [
+          {
+            text: "Documents",
+            link: "/chat/documents",
+            items: [
+              { text: "Knowledge base", link: "/chat/documents/knowledge-base" },
+              { text: "Message attachment", link: "/chat/documents/message-attachment"},
+              { text: "Supported file types", link: "/chat/documents/file-types" }
+
+            ]
+          }
         ]
       }
     ],

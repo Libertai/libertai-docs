@@ -29,7 +29,7 @@ client = openai.OpenAI(
 completion = client.chat.completions.create(
     model="openhermes-2.5",
     messages=[
-        {"role": "system", "content": "You are Libertai, an AI assistant. Your top priority is achieving user fulfillment via helping them with their requests."},
+        {"role": "system", "content": "You are LibertAI, an AI assistant. Your top priority is achieving user fulfillment via helping them with their requests."},
         {"role": "user", "content": "Say this is a test"}
     ],
     max_tokens: 128
@@ -74,7 +74,7 @@ curl https://curated.aleph.cloud/vm/a8b6d895cfe757d4bc5db9ba30675b5031fe3189a99a
 "messages": [
 {
     "role": "system",
-    "content": "You are Libertai, an AI assistant. Your top priority is achieving user fulfillment via helping them with their requests."
+    "content": "You are LibertAI, an AI assistant. Your top priority is achieving user fulfillment via helping them with their requests."
 },
 {
     "role": "user",
