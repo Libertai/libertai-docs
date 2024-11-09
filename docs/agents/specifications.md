@@ -14,7 +14,7 @@ our framework:
 ## Python
 
 While LibertAI agents can be run locally with any recent Python version, their decentralized deployment
-on [Aleph.im](https://aleph.im) requires specific versions of Python to work in.
+on [Aleph.im](https://aleph.im) requires specific runtimes with fixed versions of Python.
 
 We are working closely with the Aleph team to expand this list in the future, especially to support the latest versions:
 
