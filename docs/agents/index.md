@@ -14,9 +14,9 @@ customize:
     - From Python code (to easily turn it into a Telegram, Discord or X bot)
 
 ::: tip
-Agents is a new feature that is currently in private beta, contact the team [on Telegram](https://t.me/libertai) if you
-want to try it out!
-
+Agents are currently in private beta, contact the team [on Telegram](https://t.me/libertai) if you
+want to try it out!\
+We are planning some improvements and will listen to beta tester's feedbacks before releasing a stable version.
 :::
 
-Get started by checking our tutorial to [create your first agent in a few minutes](guides/getting-started)!
+Get started by checking our guide to [create your first agent in a few minutes](guides/getting-started)!
