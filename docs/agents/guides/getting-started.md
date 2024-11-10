@@ -16,7 +16,62 @@ If you are participating to one of our workshops, you should get a free subscrip
 hesitate to ask a team member if you don't see it in the UI 😄
 :::
 
-TODO: clone repository, explain code and archi, create tools, env vars etc
+## 🧰 Project setup
+
+Let's get started!\
+To simplify your experience, you can use [our template repository](https://github.com/Libertai/libertai-agent-template)
+to bootstrap your project.\
+Simplify click the "Use this template" button in GitHub and clone the created repository.
+
+You should end up with a structure similar to this one:
+
+```text
+template/
+├─ src/
+│  ├─ run
+│  ├─ main.py
+├─ .env.example
+├─ .env.libertai.example
+├─ .gitignore
+├─ poetry.lock
+├─ pyproject.toml
+```
+
+Here's a small explanation of the important files:
+
+- `src/main.py` contains the boilerplate code and will be the main entrypoint of your agent
+- `src/run` is shell script that is used for the agent deployment, you don't need to touch it
+- `.env.example` and `.env.libertai.example` are files that you can rename to drop the `.example` suffix. The first can
+  be used to pass
+  environment variables to your program, while the `.libertai` one will be used in the [deployment step](#-deployment)
+  (don't worry about it for now).
+
+:::tip Dependency management
+We are using [Poetry](https://python-poetry.org/) in this template to manage dependencies, hence the presence of
+`pyproject.toml` and `poetry.lock` files.\
+Feel free to use `pip` directly if you want and are more experienced with it!
+:::
+
+Take a moment to familiarize yourself with the few lines of code contained in `src/main.py`.\
+As you can see, it's pretty simple:
+
+- We are defining a function that gets the temperature of a given location 🌡
+- Then creating a `ChatAgent` with
+    - a given model among [the available ones](../specifications.md#-models) (your IDE
+      should provide autocomplete for the model ID, else you can use the name from the model page
+      on [HuggingFace](https://huggingface.co)) 🤗
+    - a system prompt (useful if we want to add some context to the objectives of the agent)
+    - a list of tools that includes our fake temperature function
+
+And that's it!\
+The `ChatAgent` object will contain a FastAPI application in its `app` property that you can expose and even extend with
+your own routes if you need to (like the Hello World here).
+
+Now let's see how we can use this base to create a useful agent 😎
+
+## 📈 Customize your agent
+
+TODO: create your own tools, change system prompt...
 
 ## 🚀 Deployment
 
