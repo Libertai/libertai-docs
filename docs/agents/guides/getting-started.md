@@ -71,7 +71,17 @@ Now let's see how we can use this base to create a useful agent 😎
 
 ## 📈 Customize your agent
 
-TODO: create your own tools, change system prompt...
+Now the most interesting part: create the agent that fits your needs.\
+TODO: create your own tools, give ideas, give system prompt example
+
+:::tip Non-API agent
+If you don't want your agent to respond to users via an API call, you can use the `expose_api=False` parameter when
+creating the agent, and instead use Python code to call the functions that correspond to the API routes (eg:
+`agent.generate_answer`, `agent.get_model_information`...).\
+This might be useful if you want to encapsulate your agent in a Telegram bot
+using [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI) for example (dedicated tutorial for this coming
+soon 😉)
+:::
 
 ## 🚀 Deployment
 
@@ -105,7 +115,9 @@ The secret key should stay private, view it as an API key that anyone can use to
 redeploying it with a malicious code.
 :::
 
-TODO: generate requirements.txt
+If you don't have a `requirements.txt` file yet, you should create one that contains the list of your dependencies.
+> 💡 With poetry you can use the [export command](https://python-poetry.org/docs/cli/#export) to generate one
+> automatically
 
 Finally, you can run the following command to start deploying your agent:
 
@@ -125,4 +137,6 @@ It can take a few minutes as your code and its dependencies are packaged inside 
 our backend (that is itself located in an Aleph.im Confidential VM of course 😉) that will publish it on Aleph with
 specific optimizations for your agent to run smoothly.\
 Once everything is done, you should have a result similar to this one:\
-TODO: add screenshot of result
+
+![Agent deployment with libertai-client](/assets/agents/deploy.png)
+TODO: how to call the agent
