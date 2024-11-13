@@ -72,7 +72,12 @@ Now let's see how we can use this base to create a useful agent 😎
 ## 📈 Customize your agent
 
 Now the most interesting part: create the agent that fits your needs.\
-TODO: create your own tools, give ideas, give system prompt example
+
+Create your own tools, change the system prompt and give birth to any idea you have in mind 😄\
+Feel free to install any dependency you might need, use environment variables... classic Python code 🐍
+
+[//]: # (TODO)
+> 🏗 More details are coming soon to this section to give you ideas, examples and tips
 
 :::tip Non-API agent
 If you don't want your agent to respond to users via an API call, you can use the `expose_api=False` parameter when
@@ -137,6 +142,21 @@ It can take a few minutes as your code and its dependencies are packaged inside 
 our backend (that is itself located in an Aleph.im Confidential VM of course 😉) that will publish it on Aleph with
 specific optimizations for your agent to run smoothly.\
 Once everything is done, you should have a result similar to this one:\
-
 ![Agent deployment with libertai-client](/assets/agents/deploy.png)
-TODO: how to call the agent
+
+Your LibertAI agent is now deployed on [Aleph](https://aleph.im)'s decentralized cloud 🚀\
+You can now call it on the `/generate_answer` endpoint to get completion responses.
+
+> 💡 Agents are currently deployed on serverless VMs for simplicity, so the first call might take some time (around 5
+> seconds) for the VM to load on a random node of the Aleph network.\
+> It will be garbage collected after some time without usage, so this might happen more or less frequently.\
+> We are planning to offer more performant options for the stable release.
+
+:::tip
+Feel free to use the OpenAPI documentation at the `/docs` endpoint of your VM for the first call to familiarize yourself
+with the route parameters if you haven't already!
+:::
+
+That's it for this tutorial 😎\
+If you'd like to go further, feel free to check [other Agent guides](./index.md) and
+to [join our Telegram](https://t.me/libertai) if you need assistance from the team.
