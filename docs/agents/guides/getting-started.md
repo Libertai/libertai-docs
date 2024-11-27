@@ -104,7 +104,7 @@ pip install libertai-client
 You'll also need the ID of your agent and the related secret key that you got when subscribing in our UI.\
 In the code template, you should see a `.env.libertai.example` file with a content similar to this one:
 
-```dotenv
+```text
 # Public agent ID
 LIBERTAI_AGENT_ID=
 

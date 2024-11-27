@@ -30,3 +30,5 @@ on [Aleph.im](https://aleph.im) requires specific runtimes with fixed versions o
 We are working closely with the Aleph team to expand this list in the future, especially to support the latest versions:
 
 - 3.11
+- ⏳Coming soon: 3.12
+- ⏳Coming soon: 3.13
