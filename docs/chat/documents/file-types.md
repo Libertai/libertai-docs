@@ -11,10 +11,23 @@ to [reach out to us on Telegram](https://t.me/libertai) and we'll see what we ca
 - Basic `.txt`
 - Markdown `.md`, `.markdown`
 - PDF `.pdf`
+- reStructuredText `.rst`
 
 ## Programming languages
 
-Coming soon...
+- HTML `.html`, `.htm`
+- C++ `.cpp`
+- Go `.go`
+- Java `.java`
+- JavaScript / TypeScript `.js`, `.ts`
+- PHP `.php`
+- Protobuf `.proto`
+- Python `.py`
+- Ruby `.rb`
+- Rust `.rs`
+- Scala `.scala`
+- Swift `.swift`
+- Solidity `.sol`
 
 ## Images
 
