@@ -4,13 +4,8 @@ In this guide, we'll show you how to create and deploy a LibertAI agent 🚀
 
 ## ⚙ Requirements
 
-You'll the need the following tools installed on your system:
-
-- A [compatible version of Python](../specifications.md#python)
-- Docker
-
-and a LibertAI Agent subscription (that you should see in [our chat UI](https://chat.libertai.io/#/agents) after
-connecting your wallet).
+You just need to have a recent version of Python installed (3.10 or more), and a LibertAI Agent subscription (that you
+should see in [our chat UI](https://chat.libertai.io/#/agents) after connecting your wallet).
 :::tip
 If you are participating to one of our workshops, you should get a free subscription for a limited period of time, don't
 hesitate to ask a team member if you don't see it in the UI 😄
@@ -28,7 +23,6 @@ You should end up with a structure similar to this one:
 ```text
 template/
 ├─ src/
-│  ├─ run
 │  ├─ main.py
 ├─ .env.example
 ├─ .env.libertai.example
@@ -40,11 +34,9 @@ template/
 Here's a small explanation of the important files:
 
 - `src/main.py` contains the boilerplate code and will be the main entrypoint of your agent
-- `src/run` is shell script that is used for the agent deployment, you don't need to touch it
 - `.env.example` and `.env.libertai.example` are files that you can rename to drop the `.example` suffix. The first can
-  be used to pass
-  environment variables to your program, while the `.libertai` one will be used in the [deployment step](#-deployment)
-  (don't worry about it for now).
+  be used to pass environment variables to your program, while the `.libertai` one will be used in
+  the [deployment step](#-deployment) (don't worry about it for now).
 
 :::tip Dependency management
 We are using [Poetry](https://python-poetry.org/) in this template to manage dependencies, hence the presence of
@@ -120,37 +112,32 @@ The secret key should stay private, view it as an API key that anyone can use to
 redeploying it with a malicious code.
 :::
 
-If you don't have a `requirements.txt` file yet, you should create one that contains the list of your dependencies.
-> 💡 With poetry you can use the [export command](https://python-poetry.org/docs/cli/#export) to generate one
-> automatically
-
-Finally, you can run the following command to start deploying your agent:
+Now you can run the following command to start deploying your agent:
 
 ```shell
-libertai agent deploy
+libertai agent deploy <project_path>
 ```
 
 It will ask you for:
 
-- The path to your project (the current directory by default, press enter or change it if you are running the command
-  from a different place)
-- The path to the code (which is the place where you have the `run` and `main.py` files, `./src` by default or change it
-  if needed)
+- The package manager that you are using (it should be detected automatically, but you can change it if it's incorrect)
+- The Python version of your project (the CLI will autodetect it too)
+- Whether your agent should be deployed in API mode or is triggered by Python code
 
 Then you can sit back and relax while the CLI deploys your agent 😎\
-It can take a few minutes as your code and its dependencies are packaged inside a Docker container and then sent to
-our backend (that is itself located in an Aleph.im Confidential VM of course 😉) that will publish it on Aleph with
-specific optimizations for your agent to run smoothly.\
+It can take a few minutes the first time as your code and its dependencies are packaged and sent to
+our backend (that is itself located in an Aleph Confidential VM of course 😉) that will deploy it on an Aleph instance
+with Docker.
+
 Once everything is done, you should have a result similar to this one:\
 ![Agent deployment with libertai-client](/assets/agents/deploy.png)
 
 Your LibertAI agent is now deployed on [Aleph](https://aleph.im)'s decentralized cloud 🚀\
 You can now call it on the `/generate_answer` endpoint to get completion responses.
 
-> 💡 Agents are currently deployed on serverless VMs for simplicity, so the first call might take some time (around 5
-> seconds) for the VM to load on a random node of the Aleph network.\
-> It will be garbage collected after some time without usage, so this might happen more or less frequently.\
-> We are planning to offer more performant options for the stable release.
+> 💡 In the future you'll be able to pass custom deployment scripts if you have specific use cases (for example to deploy
+> a vector database right next to the agent).
+> You'll also be able to get an SSH key to connect yourself to the instance and make some changes.
 
 :::tip
 Feel free to use the OpenAPI documentation at the `/docs` endpoint of your VM for the first call to familiarize yourself
