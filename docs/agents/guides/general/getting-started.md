@@ -49,7 +49,7 @@ As you can see, it's pretty simple:
 
 - We are defining a function that gets the temperature of a given location 🌡
 - Then creating a `ChatAgent` with
-    - a given model among [the available ones](../specifications.md#-models) (your IDE
+    - a given model among [the available ones](../../specifications.md#-models) (your IDE
       should provide autocomplete for the model ID, else you can use the name from the model page
       on [HuggingFace](https://huggingface.co)) 🤗
     - a system prompt (useful if we want to add some context to the objectives of the agent)
@@ -145,5 +145,5 @@ with the route parameters if you haven't already!
 :::
 
 That's it for this tutorial 😎\
-If you'd like to go further, feel free to check [other Agent guides](./index.md) and
+If you'd like to go further, feel free to check [other Agent guides](../index.md) and
 to [join our Telegram](https://t.me/libertai) if you need assistance from the team.

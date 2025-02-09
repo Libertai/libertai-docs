@@ -19,4 +19,4 @@ want to try it out!\
 We are planning some improvements and will listen to beta tester's feedbacks before releasing a stable version.
 :::
 
-Get started by checking our guide to [create your first agent in a few minutes](guides/getting-started)!
+Get started by checking our guide to [create your first agent in a few minutes](guides/general/getting-started)!

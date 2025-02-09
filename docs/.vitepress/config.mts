@@ -76,7 +76,8 @@ export default defineConfig({
                         text: "Guides",
                         link: "/agents/guides",
                         items: [
-                            {text: "Getting started", link: "/agents/guides/getting-started"}
+                            {text: "Getting started", link: "/agents/guides/general/getting-started"},
+                            {text: "Custom deployment", link: "/agents/guides/advanced/custom-deployment"}
                         ]
                     }
                 ]
