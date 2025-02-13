@@ -17,7 +17,7 @@ our framework:
 
 ### Using a gated model
 
-Some models, like [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) are gated (
-generally to require you to accept some usage conditions).\
+Some models, like [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) are gated
+(generally to require you to accept some usage conditions).\
 To use those models, you need to create an [access token](https://huggingface.co/settings/tokens) from your Hugging Face
 account and pass it to the `get_model` function.

@@ -135,14 +135,13 @@ Once everything is done, you should have a result similar to this one:\
 Your LibertAI agent is now deployed on [Aleph](https://aleph.im)'s decentralized cloud 🚀\
 You can now call it on the `/generate_answer` endpoint to get completion responses.
 
-> 💡 In the future you'll be able to pass custom deployment scripts if you have specific use cases (for example to deploy
-> a vector database right next to the agent).
-> You'll also be able to get an SSH key to connect yourself to the instance and make some changes.
-
 :::tip
 Feel free to use the OpenAPI documentation at the `/docs` endpoint of your VM for the first call to familiarize yourself
 with the route parameters if you haven't already!
 :::
+
+> 💡 You can use the CLI command `libertai agent add-ssh-key` to then connect to the instance where your agent is running
+> if you want!
 
 That's it for this tutorial 😎\
 If you'd like to go further, feel free to check [other Agent guides](../index.md) and
