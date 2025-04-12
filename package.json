@@ -12,5 +12,8 @@
   "description": "Libertai official documentation",
   "devDependencies": {
     "vitepress": "^1.2.0"
+  },
+  "dependencies": {
+    "zod": "^3.24.2"
   }
 }
