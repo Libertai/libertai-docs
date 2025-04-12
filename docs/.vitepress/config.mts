@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitepress'
+import { defineConfig } from 'vitepress'
 
 export default defineConfig({
     title: "LibertAI Documentation",
@@ -37,13 +37,11 @@ export default defineConfig({
                 link: "/apis/",
                 items: [
                     {
-                        text: "Text Generation",
-                        link: "/apis/text-generation/",
+                        text: "Text",
+                        link: "/apis/text/",
                         items: [
-                            {text: "Available models", link: "/apis/text-generation/#available-models"},
-                            {text: "Llama-like API", link: "/apis/text-generation/llama"},
-                            {text: "OpenAI-compatible API", link: "/apis/text-generation/openai"},
-                            {text: "Prompting styles", link: "/apis/text-generation/prompting"}
+                            {text: "Available models", link: "/apis/text/#available-models"},
+                            {text: "Pricing", link: "/apis/text/#pricing"},
                         ]
                     },
                 ]
