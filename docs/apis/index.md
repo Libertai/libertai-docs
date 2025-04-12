@@ -2,4 +2,4 @@
 
 Currently supported APIs:
 
-- [Text Generation API](./text-generation/index.md)
+- [Text Generation API](./text/index.md)
