@@ -1,8 +1,7 @@
 # Text Generation
 
-Text generation is supported on the network.
-
-As explained in the [architecture](../../architecture) page, inference takes place in virtual machines.
+LibertAI offers various models with competitive pricing for text generation.\
+Models are categorized in tiers that each offer different intelligence & reasoning capabilities.
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -27,7 +26,13 @@ const ModelSchema = z.object({
   name: z.string(),
   link: z.string().url(),
   category: z.string(),
-  type: z.string(),
+  capabilities: z.object({
+    text: z.object({
+      context_window: z.number(),
+      function_calling: z.boolean(),
+      reasoning: z.boolean()
+    })
+  })
 })
 
 const ModelsDataSchema = z.object({
@@ -119,21 +124,101 @@ const getModelsByCategory = (category) => {
 code {
   color: initial !important;
 }
+.model-card {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background-color: var(--vp-c-bg-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.model-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.model-capabilities {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.capability {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+.context-length {
+  background-color: var(--vp-c-brand-soft);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.capability-icon {
+  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--vp-c-brand);
+}
+.capability-tooltip {
+  position: relative;
+  cursor: help;
+}
+.capability-tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: var(--vp-c-bg-alt);
+  color: var(--vp-c-text-1);
+  text-align: center;
+  border-radius: 4px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.capability-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
 </style>
 
 ## Available Models
-
-LibertAI provides a variety of models categorized by performance tiers.
 
 <div v-if="modelsData" class="models-list">
   <div v-for="category in modelsData.categories" :key="category.name" class="category-section">
     <h3>{{ category.name }} Tier</h3>
     <div v-if="getModelsByCategory(category.name).length > 0">
-      <ul>
-        <li v-for="model in getModelsByCategory(category.name)" :key="model.id" class="model-item">
-          <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>) - <a :href="model.link" target="_blank" rel="noopener noreferrer">View on HF</a>
-        </li>
-      </ul>
+          <div v-for="model in getModelsByCategory(category.name)" :key="model.id" class="model-card">
+            <div class="model-header">
+              <div>
+                <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
+              </div>
+              <a :href="model.link" target="_blank" rel="noopener noreferrer">View on HF</a>
+            </div>
+            <div class="model-capabilities">
+              <div class="capability">
+                <span class="context-length">{{ model.capabilities.text.context_window.toLocaleString() }} context window</span>
+              </div>
+              <div v-if="model.capabilities.text.function_calling" class="capability capability-tooltip">
+                <span class="capability-icon">⚙️</span>
+                <span class="tooltip-text">Function calling supported</span>
+              </div>
+              <div v-if="model.capabilities.text.reasoning" class="capability capability-tooltip">
+                <span class="capability-icon">
+                  🧠
+                </span>
+                <span class="tooltip-text">Reasoning supported</span>
+              </div>
+            </div>
+          </div>
     </div>
     <p v-else>No models available in this tier</p>
   </div>
