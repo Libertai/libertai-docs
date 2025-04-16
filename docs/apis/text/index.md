@@ -1,7 +1,7 @@
 # Text Generation
 
 LibertAI offers various models with competitive pricing for text generation.\
-Models are categorized in tiers that each offer different intelligence & reasoning capabilities.
+Each model offers different intelligence & reasoning capabilities to match your needs.
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -10,39 +10,32 @@ import { z } from 'zod'
 // Define schema for data validation
 const TextPricingSchema = z.object({
   price_per_million_input_tokens: z.number(),
-  price_per_million_input_cached_tokens: z.number(),
   price_per_million_output_tokens: z.number(),
-})
-
-const CategorySchema = z.object({
-  name: z.string(),
-  pricing: z.object({
-    text: TextPricingSchema,
-  }),
 })
 
 const ModelSchema = z.object({
   id: z.string(),
   name: z.string(),
-  link: z.string().url(),
-  category: z.string(),
+  hf_id: z.string(),
   capabilities: z.object({
     text: z.object({
       context_window: z.number(),
       function_calling: z.boolean(),
       reasoning: z.boolean()
     })
+  }),
+  pricing: z.object({
+    text: TextPricingSchema
   })
 })
 
-const ModelsDataSchema = z.object({
-  models: z.array(ModelSchema),
-  categories: z.array(CategorySchema),
+const ModelsResponseSchema = z.object({
+  models: z.array(ModelSchema)
 })
 
 const AlephResponseSchema = z.object({
   data: z.object({
-    TEST_LTAI_PRICING: ModelsDataSchema,
+    TEST_LTAI_PRICING: ModelsResponseSchema,
   }),
 })
 
@@ -64,6 +57,7 @@ const fetchModelsData = async () => {
   } catch (err) {
     if (err.errors) {
       // This is a Zod validation error
+      console.error(err.errors)
       parseError.value = `Validation error: ${err.errors.map(e => e.message).join(', ')}`
     } else {
       // This is a fetch or other error
@@ -74,12 +68,6 @@ const fetchModelsData = async () => {
 }
 
 onMounted(fetchModelsData)
-
-// Helper function to group models by category
-const getModelsByCategory = (category) => {
-  if (!modelsData.value) return []
-  return modelsData.value.models.filter(model => model.category === category)
-}
 </script>
 
 <div v-if="loading" class="loading">Loading models & pricing...</div>
@@ -193,34 +181,28 @@ code {
 ## Available Models
 
 <div v-if="modelsData" class="models-list">
-  <div v-for="category in modelsData.categories" :key="category.name" class="category-section">
-    <h3>{{ category.name }} Tier</h3>
-    <div v-if="getModelsByCategory(category.name).length > 0">
-          <div v-for="model in getModelsByCategory(category.name)" :key="model.id" class="model-card">
-            <div class="model-header">
-              <div>
-                <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
-              </div>
-              <a :href="model.link" target="_blank" rel="noopener noreferrer">View on HF</a>
-            </div>
-            <div class="model-capabilities">
-              <div class="capability">
-                <span class="context-length">{{ model.capabilities.text.context_window.toLocaleString() }} context window</span>
-              </div>
-              <div v-if="model.capabilities.text.function_calling" class="capability capability-tooltip">
-                <span class="capability-icon">⚙️</span>
-                <span class="tooltip-text">Function calling supported</span>
-              </div>
-              <div v-if="model.capabilities.text.reasoning" class="capability capability-tooltip">
-                <span class="capability-icon">
-                  🧠
-                </span>
-                <span class="tooltip-text">Reasoning supported</span>
-              </div>
-            </div>
-          </div>
+  <div v-for="model in modelsData.models" :key="model.id" class="model-card">
+    <div class="model-header">
+      <div>
+        <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
+      </div>
+      <a :href="`https://huggingface.co/${model.hf_id}`" target="_blank" rel="noopener noreferrer">View on HF</a>
     </div>
-    <p v-else>No models available in this tier</p>
+    <div class="model-capabilities">
+      <div class="capability">
+        <span class="context-length">{{ model.capabilities.text.context_window.toLocaleString() }} context window</span>
+      </div>
+      <div v-if="model.capabilities.text.function_calling" class="capability capability-tooltip">
+        <span class="capability-icon">⚙️</span>
+        <span class="tooltip-text">Function calling supported</span>
+      </div>
+      <div v-if="model.capabilities.text.reasoning" class="capability capability-tooltip">
+        <span class="capability-icon">
+          🧠
+        </span>
+        <span class="tooltip-text">Reasoning supported</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -233,18 +215,16 @@ Different model categories have different pricing tiers.
   <table class="pricing-table">
     <thead>
       <tr>
-        <th></th>
+        <th>Model</th>
         <th>Input</th>
-        <th>Cached input</th>
         <th>Output</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="category in modelsData.categories" :key="category.name">
-        <td>{{ category.name }}</td>
-        <td>${{ category.pricing.text.price_per_million_input_tokens.toFixed(2) }} / 1M tokens</td>
-        <td>${{ category.pricing.text.price_per_million_input_cached_tokens.toFixed(2) }} / 1M tokens</td>
-        <td>${{ category.pricing.text.price_per_million_output_tokens.toFixed(2) }} / 1M tokens</td>
+      <tr v-for="model in modelsData.models" :key="model.id">
+        <td>{{ model.name }}</td>
+        <td>${{ model.pricing.text.price_per_million_input_tokens.toFixed(2) }} / 1M tokens</td>
+        <td>${{ model.pricing.text.price_per_million_output_tokens.toFixed(2) }} / 1M tokens</td>
       </tr>
     </tbody>
   </table>
