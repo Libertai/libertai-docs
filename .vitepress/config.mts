@@ -1,6 +1,12 @@
-import {defineConfig} from 'vitepress'
+import { defineConfig } from 'vitepress'
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
 
 export default defineConfig({
+    markdown: {
+        config: (md) => {
+            md.use(tabsMarkdownPlugin)
+        }
+    },
     title: "LibertAI Documentation",
     description: "LibertAI.io official documentation",
 
@@ -42,6 +48,7 @@ export default defineConfig({
                         items: [
                             {text: "Available models", link: "/apis/text/#available-models"},
                             {text: "Pricing", link: "/apis/text/#pricing"},
+                            {text: "Usage", link: "/apis/text/usage"},
                         ]
                     },
                 ]
@@ -83,7 +90,7 @@ export default defineConfig({
         ],
 
         editLink: {
-            pattern: 'https://github.com/libertai/libertai-docs/edit/main/docs/:path',
+            pattern: 'https://github.com/libertai/libertai-docs/edit/main/:path',
             text: 'Edit this page on GitHub'
         },
 

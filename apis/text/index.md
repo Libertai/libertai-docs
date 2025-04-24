@@ -3,6 +3,8 @@
 LibertAI offers various models with competitive pricing for text generation.\
 Each model offers different intelligence & reasoning capabilities to match your needs.
 
+You can find usage examples in various languages [here](./usage.md).
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { z } from 'zod'
@@ -21,7 +23,8 @@ const ModelSchema = z.object({
     text: z.object({
       context_window: z.number(),
       function_calling: z.boolean(),
-      reasoning: z.boolean()
+      reasoning: z.boolean(),
+      tee: z.boolean().optional()
     })
   }),
   pricing: z.object({
@@ -201,6 +204,10 @@ code {
           🧠
         </span>
         <span class="tooltip-text">Reasoning supported</span>
+      </div>
+      <div v-if="model.capabilities.text.tee" class="capability capability-tooltip">
+        <span class="capability-icon">🔒</span>
+        <span class="tooltip-text">Running in a Trusted Execution Environment</span>
       </div>
     </div>
   </div>

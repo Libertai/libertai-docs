@@ -82,7 +82,7 @@ soon 😉)
 
 ## 🚀 Deployment
 
-Now that your agent is ready, let's deploy it in a decentralized environment using [Aleph.im](https://aleph.im)!
+Now that your agent is ready, let's deploy it in a decentralized environment using [Aleph Cloud](https://aleph.cloud)!
 For this, you need to install [our CLI](https://pypi.org/project/libertai-client) that will simplify the deployment
 process.
 
@@ -132,7 +132,7 @@ with Docker.
 Once everything is done, you should have a result similar to this one:\
 ![Agent deployment with libertai-client](/assets/agents/deploy.png)
 
-Your LibertAI agent is now deployed on [Aleph](https://aleph.im)'s decentralized cloud 🚀\
+Your LibertAI agent is now deployed on [Aleph](https://aleph.cloud)'s decentralized cloud 🚀\
 You can now call it on the `/generate_answer` endpoint to get completion responses.
 
 :::tip
