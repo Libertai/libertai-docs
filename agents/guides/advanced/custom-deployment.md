@@ -18,7 +18,7 @@ You just need to be familiar with shell scripting and Docker.
 
 Let's first get a quick overview of the general deployment process so you can understand how to customize it.
 
-LibertAI's agents deployment on [Aleph Cloud](https://aleph.im) instances is centered around a simple shell script that
+LibertAI's agents deployment on [Aleph Cloud](https://aleph.cloud) instances is centered around a simple shell script that
 you can find [in our repository](https://github.com/Libertai/libertai-agents/blob/main/deployment/deploy.sh).\
 Every time a deployment is triggered, a ZIP archive of the code will be sent on the instance, along with this script
 that has 3 main purposes:
