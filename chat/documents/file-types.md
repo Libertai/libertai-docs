@@ -1,6 +1,6 @@
 # Supported file types
 
-Our [message attachment](./message-attachment.md) and [Knowledge base](./knowledge-base.md) features support the file
+Our [message attachment](message-attachment.md) and [Knowledge base](knowledge-base.md) features support the file
 types listed below.
 
 We are planning to add other file types in the future, if you have a specific need feel free
