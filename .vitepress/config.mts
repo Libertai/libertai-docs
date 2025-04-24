@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitepress'
+import {defineConfig} from 'vitepress'
 
 export default defineConfig({
     title: "LibertAI Documentation",
@@ -18,7 +18,7 @@ export default defineConfig({
 
         nav: [
             {text: 'Home', link: '/'},
-            {text: 'APIs', link: '/apis/text-generation/'},
+            {text: 'APIs', link: '/apis/text/'},
             {text: 'Agents', link: '/agents'}
         ],
 

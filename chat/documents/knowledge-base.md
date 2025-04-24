@@ -5,7 +5,7 @@ different use cases within our private AI ecosystem!
 
 ::: tip Simple file usage
 If you just want to have a simple solution to use one/multiple documents in a single conversion, take a look
-at [message attachments](./message-attachment.md).
+at [message attachments](message-attachment.md).
 :::
 
 Think of Knowledge bases as a drive where you can create folders and upload documents, and your AI assistant can access
@@ -22,5 +22,5 @@ endless:
 - Anything else you can think of 🚀
 
 ---
-Knowledge Bases [support various file types](./file-types.md) without restriction on the file size (as long as you don't
+Knowledge Bases [support various file types](file-types.md) without restriction on the file size (as long as you don't
 exceed the limit of your subscription plan)
