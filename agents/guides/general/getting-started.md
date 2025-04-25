@@ -63,7 +63,7 @@ Now let's see how we can use this base to create a useful agent 😎
 
 ## 📈 Customize your agent
 
-Now the most interesting part: create the agent that fits your needs.\
+Now the most interesting part: create the agent that fits your needs.
 
 Create your own tools, change the system prompt and give birth to any idea you have in mind 😄\
 Feel free to install any dependency you might need, use environment variables... classic Python code 🐍
