@@ -36,7 +36,7 @@ Here's a small explanation of the important files:
 - `src/main.py` contains the boilerplate code and will be the main entrypoint of your agent
 - `.env.example` and `.env.libertai.example` are files that you can rename to drop the `.example` suffix. The first can
   be used to pass environment variables to your program, while the `.libertai` one will be used in
-  the [deployment step](#-deployment) (don't worry about it for now).
+  the [deployment step](#deployment) (don't worry about it for now).
 
 :::tip Dependency management
 We are using [Poetry](https://python-poetry.org/) in this template to manage dependencies, hence the presence of
@@ -63,7 +63,7 @@ Now let's see how we can use this base to create a useful agent 😎
 
 ## 📈 Customize your agent
 
-Now the most interesting part: create the agent that fits your needs.\
+Now the most interesting part: create the agent that fits your needs.
 
 Create your own tools, change the system prompt and give birth to any idea you have in mind 😄\
 Feel free to install any dependency you might need, use environment variables... classic Python code 🐍
@@ -80,7 +80,7 @@ using [pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI) for exam
 soon 😉)
 :::
 
-## 🚀 Deployment
+<h2 id="deployment">🚀 Deployment</h2>
 
 Now that your agent is ready, let's deploy it in a decentralized environment using [Aleph Cloud](https://aleph.cloud)!
 For this, you need to install [our CLI](https://pypi.org/project/libertai-client) that will simplify the deployment
