@@ -53,8 +53,6 @@ For agents that require specific environment variables, you can provide them dir
       LOCALHOST_URL=http://localhost:3000
 ```
 
-For larger environments, consider using encrypted secrets or `.env` files for better maintainability.
-
 ---
 
 ## Required Inputs - Agent ID and Secret
