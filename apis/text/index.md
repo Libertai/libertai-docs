@@ -38,7 +38,7 @@ const ModelsResponseSchema = z.object({
 
 const AlephResponseSchema = z.object({
   data: z.object({
-    TEST_LTAI_PRICING: ModelsResponseSchema,
+    LTAI_PRICING: ModelsResponseSchema,
   }),
 })
 
@@ -50,12 +50,12 @@ const parseError = ref(null)
 // Fetch and validate data
 const fetchModelsData = async () => {
   try {
-    const response = await fetch('https://api2.aleph.im/api/v0/aggregates/0xe1F7220D201C64871Cefb25320a8a588393eE508.json?keys=TEST_LTAI_PRICING')
+    const response = await fetch('https://api2.aleph.im/api/v0/aggregates/0xe1F7220D201C64871Cefb25320a8a588393eE508.json?keys=LTAI_PRICING')
     const data = await response.json()
 
     // Validate data with Zod schema
     const validatedData = AlephResponseSchema.parse(data)
-    modelsData.value = validatedData.data.TEST_LTAI_PRICING
+    modelsData.value = validatedData.data.LTAI_PRICING
     loading.value = false
   } catch (err) {
     if (err.errors) {
