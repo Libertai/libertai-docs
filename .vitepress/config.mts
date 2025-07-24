@@ -14,7 +14,7 @@ export default defineConfig({
         ['link', {rel: 'icon', href: '/favicon.ico'}]
     ],
 
-    // cleanUrls: true, TODO: Check if this can be enabled if deployed on TwentySix
+    // cleanUrls: true, TODO: Check if this can be enabled if deployed on Aleph
     lastUpdated: true,
 
 
@@ -81,9 +81,9 @@ export default defineConfig({
                         text: "Guides",
                         link: "/agents/guides",
                         items: [
-                            {text: "Getting started", link: "/agents/guides/general/getting-started"},
-                            {text: "Github action", link: "/agents/guides/general/github-action"},
-                            {text: "Custom deployment", link: "/agents/guides/advanced/custom-deployment"}
+                            {text: "Pydantic AI", link: "/agents/guides/general/getting-started-pydantic-ai"},
+                            // {text: "Github action", link: "/agents/guides/general/github-action"},
+                            // {text: "Custom deployment", link: "/agents/guides/advanced/custom-deployment"}
                         ]
                     }
                 ]
@@ -102,7 +102,6 @@ export default defineConfig({
         socialLinks: [
             {icon: 'github', link: 'https://github.com/libertai'},
             {icon: 'x', link: 'https://x.com/Libertai_DAI'},
-            // TODO: Add link to chat
         ]
     }
 })

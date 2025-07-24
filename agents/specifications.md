@@ -1,23 +1,21 @@
----
-outline: [ 2, 3 ]
----
-
 # Specifications
 
 Looking for the technologies and models supported by LibertAI agents?\
 You're in the right place 😎
 
-## 🧠 Models
+## Models 🧠 {#models}
 
-We provide several open-source models running in decentralized instances with agentic capabilities that can be used in
-our framework:
+You can use any of [our text inference models](/apis/text/#available-models) that supports function calling.
 
-- [Hermes 3 - 8B version](https://huggingface.co/NousResearch/Hermes-3-Llama-3.1-8B) (fast)
-- [Mistral Nemo Instruct 2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) (big context window)
+::: tip
+For now we recommend that you stick with `hermes-3-8b-tee` as `gemma-3-27b` has a specific way of handling tool calls that may not be supported by the framework you choose.\
+We are planning some improvements on this part and will update this documentation once Gemma & other models can be used easily.
+:::
 
-### Using a gated model
+## Frameworks 🧰 {#frameworks}
 
-Some models, like [Mistral-Nemo-Instruct-2407](https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407) are gated
-(generally to require you to accept some usage conditions).\
-To use those models, you need to create an [access token](https://huggingface.co/settings/tokens) from your Hugging Face
-account and pass it to the `get_model` function.
+The frameworks listed bellow are the ones that have been tested by our team and community.\
+Other open-source frameworks might be compatible if they support custom OpenAI-compatible providers, feel free to [reach out on Telegram](https://t.me/libertai) for additional integration support
+
+- [Pydantic AI](https://ai.pydantic.dev/)
+- [LibertAI's framework](https://pypi.org/project/libertai-agents/) (will be deprecated in the future)
