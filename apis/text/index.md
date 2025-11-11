@@ -24,7 +24,8 @@ const ModelSchema = z.object({
       context_window: z.number(),
       function_calling: z.boolean(),
       reasoning: z.boolean(),
-      tee: z.boolean().optional()
+      tee: z.boolean().optional(),
+      vision: z.boolean()
     })
   }),
   pricing: z.object({
@@ -198,6 +199,10 @@ code {
       <div v-if="model.capabilities.text.function_calling" class="capability capability-tooltip">
         <span class="capability-icon">⚙️</span>
         <span class="tooltip-text">Function calling supported</span>
+      </div>
+      <div v-if="model.capabilities.text.vision" class="capability capability-tooltip">
+        <span class="capability-icon">👁️</span>
+        <span class="tooltip-text">Vision (image input) supported</span>
       </div>
       <div v-if="model.capabilities.text.reasoning" class="capability capability-tooltip">
         <span class="capability-icon">
