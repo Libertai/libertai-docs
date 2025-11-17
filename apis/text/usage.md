@@ -10,7 +10,9 @@ All of our text generation models support the following endpoints:
 
 This means that you can use our models with any of [the OpenAI SDKs](https://platform.openai.com/docs/libraries#install-an-official-sdk) or with frameworks that support custom OpenAI-compatible models.
 
-Here are some basic examples:
+## Examples
+
+### Basic chat completion
 
 :::tabs
 
@@ -69,6 +71,96 @@ const completion = await client.chat.completions.create({
             content: "What is a Trusted Execution Environment?",
         },
     ],
+});
+
+console.log(completion.choices[0].message.content);
+```
+
+:::
+
+### Vision
+
+:::tabs
+
+== Shell
+```sh
+curl -X POST https://api.libertai.io/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gemma-3-27b",
+    "messages": [
+      {
+        "role": "user",
+        "content": [
+          { "type": "text", "text": "What is in this image?" },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+            }
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+== Python
+```python
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="https://api.libertai.io/v1",
+    api_key="YOUR_API_KEY",
+)
+
+completion = client.chat.completions.create(
+    model="gemma-3-27b",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Describe this image."},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+                    }
+                }
+            ]
+        }
+    ]
+)
+
+print(completion.choices[0].message.content)
+```
+
+== TypeScript
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://api.libertai.io/v1",
+  apiKey: "YOUR_API_KEY",
+});
+
+const completion = await client.chat.completions.create({
+  model: "gemma-3-27b",
+  messages: [
+    {
+      role: "user",
+      content: [
+        { type: "text", text: "What do you see in this image?" },
+        {
+          type: "image_url",
+          image_url: {
+            url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...",
+          },
+        },
+      ],
+    },
+  ],
 });
 
 console.log(completion.choices[0].message.content);
