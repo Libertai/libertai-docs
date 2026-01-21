@@ -26,10 +26,12 @@ const ModelSchema = z.object({
       reasoning: z.boolean(),
       tee: z.boolean().optional(),
       vision: z.boolean()
-    })
+    }).optional(),
+    image: z.boolean().optional()
   }),
   pricing: z.object({
-    text: TextPricingSchema
+    text: TextPricingSchema.optional(),
+    image: z.number().optional()
   })
 })
 
@@ -56,7 +58,9 @@ const fetchModelsData = async () => {
 
     // Validate data with Zod schema
     const validatedData = AlephResponseSchema.parse(data)
-    modelsData.value = validatedData.data.LTAI_PRICING
+    // Filter only text models
+    const textModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.text)
+    modelsData.value = { models: textModels }
     loading.value = false
   } catch (err) {
     if (err.errors) {

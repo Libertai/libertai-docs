@@ -9,3 +9,4 @@ You can use the [Developer console](https://console.libertai.io) to create an AP
 These are the APIs currently available:
 
 - [Text Generation API](text/index.md)
+- [Image Generation API](image/index.md)

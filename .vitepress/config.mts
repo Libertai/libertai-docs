@@ -51,6 +51,15 @@ export default defineConfig({
                             {text: "Usage", link: "/apis/text/usage"},
                         ]
                     },
+                    {
+                        text: "Image",
+                        link: "/apis/image/",
+                        items: [
+                            {text: "Available models", link: "/apis/image/#available-models"},
+                            {text: "Pricing", link: "/apis/image/#pricing"},
+                            {text: "Usage", link: "/apis/image/#usage-examples"},
+                        ]
+                    },
                 ]
             },
             {
