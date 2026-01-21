@@ -349,19 +349,21 @@ const url = URL.createObjectURL(blob);
 
 ## Parameters
 
-### Common Parameters
+### Required
 
-- `model` (required): The model ID to use for generation (e.g., `z-image-turbo`)
-- `prompt` (required): Text description of the image to generate
+- `model`: The model ID to use for generation (e.g., `z-image-turbo`)
+- `prompt`: Text description of the image to generate
 
-### sdapi Endpoint Parameters
+### sdapi optional parameters
 
-- `width` (optional): Image width in pixels (default: 1024)
-- `height` (optional): Image height in pixels (default: 1024)
-- `steps` (optional): Number of steps (default: 9, more steps = higher quality but slower)
-- `seed` (optional): Seed to use to maintain consistency across generations
+- `width`: Image width in pixels (default: 1024)
+- `height`: Image height in pixels (default: 1024)
+- `steps`: Number of steps (default: 9, more steps = higher quality but slower)
+- `seed`: Seed to use to maintain consistency across generations
+- `remove_background`: Enable to remove the background of the image after the generation (default: false)
 
-### OpenAI-compatible Endpoint Parameters
+### OpenAI-compatible optional parameters
 
-- `size` (optional): Image size in format `WIDTHxHEIGHT` (e.g., `512x512`, default `1024x1024`)
-- `n` (optional): Number of images to generate. Only `n=1` is supported right now, multiple images will be supported in the future
+- `size`: Image size in format `WIDTHxHEIGHT` (e.g., `512x512`, default `1024x1024`)
+- `n`: Number of images to generate. Only `n=1` is supported right now, multiple images will be supported in the future
+- `remove_background`: Enable to remove the background of the image after the generation (default: false)
