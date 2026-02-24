@@ -13,7 +13,7 @@ const ImagePricingSchema = z.number()
 const ModelSchema = z.object({
   id: z.string(),
   name: z.string(),
-  hf_id: z.string(),
+  hf_id: z.string().optional(),
   capabilities: z.object({
     text: z.object({
       context_window: z.number(),
@@ -22,14 +22,16 @@ const ModelSchema = z.object({
       tee: z.boolean().optional(),
       vision: z.boolean()
     }).optional(),
-    image: z.boolean().optional()
+    image: z.boolean().optional(),
+    search: z.boolean().optional()
   }),
   pricing: z.object({
     text: z.object({
       price_per_million_input_tokens: z.number(),
       price_per_million_output_tokens: z.number(),
     }).optional(),
-    image: ImagePricingSchema.optional()
+    image: ImagePricingSchema.optional(),
+    search: z.number().optional()
   })
 })
 
@@ -139,7 +141,7 @@ code {
       <div>
         <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
       </div>
-      <a :href="`https://huggingface.co/${model.hf_id}`" target="_blank" rel="noopener noreferrer">View on HF</a>
+      <a v-if="model.hf_id" :href="`https://huggingface.co/${model.hf_id}`" target="_blank" rel="noopener noreferrer">View on HF</a>
     </div>
   </div>
 </div>

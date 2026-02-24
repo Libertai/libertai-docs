@@ -10,3 +10,4 @@ These are the APIs currently available:
 
 - [Text Generation API](text/index.md)
 - [Image Generation API](image/index.md)
+- [Web Search](search/index.md) (available only through [LiberClaw.ai](https://liberclaw.ai) for now)

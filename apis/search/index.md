@@ -1,20 +1,13 @@
-# Text Generation
+# Web Search
 
-LibertAI offers various models with competitive pricing for text generation.\
-Each model offers different intelligence & reasoning capabilities to match your needs.
-
-You can find usage examples in various languages [here](./usage.md).
+LibertAI offers web search models with competitive pricing.\
+These models are currently available through [LiberClaw.ai](https://liberclaw.ai) and are not directly accessible via the API.
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { z } from 'zod'
 
 // Define schema for data validation
-const TextPricingSchema = z.object({
-  price_per_million_input_tokens: z.number(),
-  price_per_million_output_tokens: z.number(),
-})
-
 const ModelSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -31,7 +24,10 @@ const ModelSchema = z.object({
     search: z.boolean().optional()
   }),
   pricing: z.object({
-    text: TextPricingSchema.optional(),
+    text: z.object({
+      price_per_million_input_tokens: z.number(),
+      price_per_million_output_tokens: z.number(),
+    }).optional(),
     image: z.number().optional(),
     search: z.number().optional()
   })
@@ -60,9 +56,9 @@ const fetchModelsData = async () => {
 
     // Validate data with Zod schema
     const validatedData = AlephResponseSchema.parse(data)
-    // Filter only text models
-    const textModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.text)
-    modelsData.value = { models: textModels }
+    // Filter only search models
+    const searchModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.search)
+    modelsData.value = { models: searchModels }
     loading.value = false
   } catch (err) {
     if (err.errors) {
@@ -88,9 +84,6 @@ onMounted(fetchModelsData)
 <style>
 .models-list {
   margin: 2rem 0;
-}
-.category-section {
-  margin-bottom: 1.5rem;
 }
 .pricing-table {
   width: 100%;
@@ -136,59 +129,9 @@ code {
   justify-content: space-between;
   align-items: center;
 }
-.model-capabilities {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-.capability {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.9rem;
-}
-.context-length {
-  background-color: var(--vp-c-brand-soft);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-weight: 500;
-}
-.capability-icon {
-  font-size: 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--vp-c-brand);
-}
-.capability-tooltip {
-  position: relative;
-  cursor: help;
-}
-.capability-tooltip .tooltip-text {
-  visibility: hidden;
-  background-color: var(--vp-c-bg-alt);
-  color: var(--vp-c-text-1);
-  text-align: center;
-  border-radius: 4px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-.capability-tooltip:hover .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-}
 </style>
 
-## Available Models
+## Available Search Providers
 
 <div v-if="modelsData" class="models-list">
   <div v-for="model in modelsData.models" :key="model.id" class="model-card">
@@ -196,53 +139,26 @@ code {
       <div>
         <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
       </div>
-      <a v-if="model.hf_id" :href="`https://huggingface.co/${model.hf_id}`" target="_blank" rel="noopener noreferrer">View on HF</a>
-    </div>
-    <div class="model-capabilities">
-      <div class="capability">
-        <span class="context-length">{{ model.capabilities.text.context_window.toLocaleString() }} context window</span>
-      </div>
-      <div v-if="model.capabilities.text.function_calling" class="capability capability-tooltip">
-        <span class="capability-icon">⚙️</span>
-        <span class="tooltip-text">Function calling supported</span>
-      </div>
-      <div v-if="model.capabilities.text.vision" class="capability capability-tooltip">
-        <span class="capability-icon">👁️</span>
-        <span class="tooltip-text">Vision (image input) supported</span>
-      </div>
-      <div v-if="model.capabilities.text.reasoning" class="capability capability-tooltip">
-        <span class="capability-icon">
-          🧠
-        </span>
-        <span class="tooltip-text">Reasoning supported</span>
-      </div>
-      <div v-if="model.capabilities.text.tee" class="capability capability-tooltip">
-        <span class="capability-icon">🔒</span>
-        <span class="tooltip-text">Running in a Trusted Execution Environment</span>
-      </div>
     </div>
   </div>
 </div>
 
 ## Pricing
 
-The pricing for our text generation models is based on token usage.\
-Different model categories have different pricing tiers.
+Search pricing is per query.
 
 <div v-if="modelsData" class="table-responsive">
   <table class="pricing-table">
     <thead>
       <tr>
-        <th>Model</th>
-        <th>Input</th>
-        <th>Output</th>
+        <th>Provider</th>
+        <th>Price per Query</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="model in modelsData.models" :key="model.id">
         <td>{{ model.name }}</td>
-        <td>${{ model.pricing.text.price_per_million_input_tokens.toFixed(2) }} / 1M tokens</td>
-        <td>${{ model.pricing.text.price_per_million_output_tokens.toFixed(2) }} / 1M tokens</td>
+        <td>${{ model.pricing.search.toFixed(4) }}</td>
       </tr>
     </tbody>
   </table>
