@@ -20,15 +20,32 @@ hero:
 
 
 features:
-  - title: Private
+  - title: Private by Design
     icon: 🔒
-    details: Chat freely with privacy protection - Your AI journey, your privacy! We don’t log or train models with your data.
-  - title: Powerful
-    icon: ⚡
-    details: Explore various Chat-GPT like open-source models, such as Llama 3 70b, for free.
-  - title: Productive
-    icon: 🚀
-    details: Create your Private AI Assistant now for enhanced productivity.
+    details: Models run in Trusted Execution Environments — no one, not even us, can see your data. No logs, no training on your conversations.
+  - title: Text & Vision APIs
+    icon: 💬
+    details: OpenAI-compatible API with open-source LLMs. Function calling, vision, reasoning — swap your base URL and go.
+    link: /apis/text/
+    linkText: Explore models
+  - title: Image Generation
+    icon: 🎨
+    details: Generate images from text prompts. Stable Diffusion WebUI and OpenAI-compatible endpoints.
+    link: /apis/image/
+    linkText: Start generating
+  - title: LiberClaw
+    icon: 🐾
+    details: Deploy sovereign AI agents on decentralized infrastructure. From concept to live agent in minutes, with encrypted comms and persistent memory.
+    link: https://liberclaw.ai
+    linkText: Try LiberClaw
+  - title: AI Agents
+    icon: 🤖
+    details: Build autonomous agents with function calling. Compatible with Pydantic AI and LangChain, deployable on Aleph Cloud.
+    link: /agents
+    linkText: Learn more
+  - title: Decentralized
+    icon: ⛓️
+    details: Runs on Aleph Cloud’s distributed compute network. No single point of failure, no corporate gatekeepers.
 ---
 
 <style>
