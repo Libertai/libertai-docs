@@ -362,10 +362,11 @@ const url = URL.createObjectURL(blob);
 - `height`: Image height in pixels (default: 1024)
 - `steps`: Number of steps (default: 9, more steps = higher quality but slower)
 - `seed`: Seed to use to maintain consistency across generations
+- `n`: Number of images to generate (default: 1, max: 4)
 - `remove_background`: Enable to remove the background of the image after the generation (default: false)
 
 ### OpenAI-compatible optional parameters
 
 - `size`: Image size in format `WIDTHxHEIGHT` (e.g., `512x512`, default `1024x1024`)
-- `n`: Number of images to generate. Only `n=1` is supported right now, multiple images will be supported in the future
+- `n`: Number of images to generate (default: 1, max: 4)
 - `remove_background`: Enable to remove the background of the image after the generation (default: false)
