@@ -11,9 +11,6 @@ hero:
     - theme: alt
       text: APIs
       link: /apis/
-    - theme: alt
-      text: Agents
-      link: /agents
   image:
     src: /assets/home.png
     alt: VitePress

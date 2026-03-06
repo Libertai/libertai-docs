@@ -60,43 +60,12 @@ export default defineConfig({
                             {text: "Usage", link: "/apis/image/#usage-examples"},
                         ]
                     },
+                    {
+                        text: "x402 payments",
+                        link: "/apis/x402",
+                    },
                 ]
             },
-            {
-                text: "Chat UI",
-                collapsed: false,
-                items: [
-                    {
-                        text: "Documents",
-                        link: "/chat/documents",
-                        items: [
-                            {text: "Knowledge base", link: "/chat/documents/knowledge-base"},
-                            {text: "Message attachment", link: "/chat/documents/message-attachment"},
-                            {text: "Supported file types", link: "/chat/documents/file-types"}
-
-                        ]
-                    }
-                ]
-            },
-            {
-                text: "Agents",
-                link: "/agents",
-                collapsed: false,
-                items: [
-                    {
-                        text: "Specifications",
-                        link: "/agents/specifications"
-                    }, {
-                        text: "Guides",
-                        link: "/agents/guides",
-                        items: [
-                            {text: "Pydantic AI", link: "/agents/guides/general/getting-started-pydantic-ai"},
-                            // {text: "Github action", link: "/agents/guides/general/github-action"},
-                            // {text: "Custom deployment", link: "/agents/guides/advanced/custom-deployment"}
-                        ]
-                    }
-                ]
-            }
         ],
 
         editLink: {
