@@ -409,6 +409,6 @@ const url = URL.createObjectURL(blob);
     </table>
   </div>
 </div>
-<div v-else-if="!loading && !error">
+<div v-else-if="!loading && !error && !parseError">
   <p>No deprecated models at this time.</p>
 </div>

@@ -286,6 +286,6 @@ Different model categories have different pricing tiers.
     </table>
   </div>
 </div>
-<div v-else-if="!loading && !error">
+<div v-else-if="!loading && !error && !parseError">
   <p>No deprecated models at this time.</p>
 </div>
