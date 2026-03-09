@@ -41,6 +41,7 @@ const RedirectionSchema = z.object({
   from: z.string(),
   to: z.string(),
   type: z.enum(['DEPRECATED', 'INTERNAL']),
+  category: z.string(),
   description: z.string().optional()
 })
 
@@ -73,10 +74,9 @@ const fetchModelsData = async () => {
     const textModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.text)
     modelsData.value = { models: textModels }
 
-    // Filter DEPRECATED redirections that point to text models
-    const textModelIds = new Set(textModels.map(m => m.id))
+    // Filter DEPRECATED redirections for text models
     deprecatedRedirections.value = validatedData.data.LTAI_PRICING.redirections
-      .filter(r => r.type === 'DEPRECATED' && textModelIds.has(r.to))
+      .filter(r => r.type === 'DEPRECATED' && r.category === 'text')
 
     loading.value = false
   } catch (err) {

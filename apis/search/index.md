@@ -37,6 +37,7 @@ const RedirectionSchema = z.object({
   from: z.string(),
   to: z.string(),
   type: z.enum(['DEPRECATED', 'INTERNAL']),
+  category: z.string(),
   description: z.string().optional()
 })
 
@@ -69,10 +70,9 @@ const fetchModelsData = async () => {
     const searchModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.search)
     modelsData.value = { models: searchModels }
 
-    // Filter DEPRECATED redirections that point to search models
-    const searchModelIds = new Set(searchModels.map(m => m.id))
+    // Filter DEPRECATED redirections for search models
     deprecatedRedirections.value = validatedData.data.LTAI_PRICING.redirections
-      .filter(r => r.type === 'DEPRECATED' && searchModelIds.has(r.to))
+      .filter(r => r.type === 'DEPRECATED' && r.category === 'search')
 
     loading.value = false
   } catch (err) {
