@@ -35,8 +35,16 @@ const ModelSchema = z.object({
   })
 })
 
+const RedirectionSchema = z.object({
+  from: z.string(),
+  to: z.string(),
+  type: z.enum(['DEPRECATED', 'INTERNAL']),
+  description: z.string().optional()
+})
+
 const ModelsResponseSchema = z.object({
-  models: z.array(ModelSchema)
+  models: z.array(ModelSchema),
+  redirections: z.array(RedirectionSchema).optional().default([])
 })
 
 const AlephResponseSchema = z.object({
@@ -49,6 +57,7 @@ const modelsData = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const parseError = ref(null)
+const deprecatedRedirections = ref([])
 
 // Fetch and validate data
 const fetchModelsData = async () => {
@@ -61,6 +70,12 @@ const fetchModelsData = async () => {
     // Filter only image models
     const imageModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.image)
     modelsData.value = { models: imageModels }
+
+    // Filter DEPRECATED redirections that point to image models
+    const imageModelIds = new Set(imageModels.map(m => m.id))
+    deprecatedRedirections.value = validatedData.data.LTAI_PRICING.redirections
+      .filter(r => r.type === 'DEPRECATED' && imageModelIds.has(r.to))
+
     loading.value = false
   } catch (err) {
     if (err.errors) {
@@ -370,3 +385,30 @@ const url = URL.createObjectURL(blob);
 - `size`: Image size in format `WIDTHxHEIGHT` (e.g., `512x512`, default `1024x1024`)
 - `n`: Number of images to generate (default: 1, max: 4)
 - `remove_background`: Enable to remove the background of the image after the generation (default: false)
+
+## Deprecated Models
+
+<div v-if="deprecatedRedirections.length > 0">
+  <p>The following model names have been deprecated but still work through automatic redirection.</p>
+  <div class="table-responsive">
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Old Model Name</th>
+          <th>Redirects To</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="r in deprecatedRedirections" :key="r.from">
+          <td><code>{{ r.from }}</code></td>
+          <td><code>{{ r.to }}</code></td>
+          <td>{{ r.description || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div v-else-if="!loading && !error">
+  <p>No deprecated models at this time.</p>
+</div>

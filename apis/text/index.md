@@ -37,8 +37,16 @@ const ModelSchema = z.object({
   })
 })
 
+const RedirectionSchema = z.object({
+  from: z.string(),
+  to: z.string(),
+  type: z.enum(['DEPRECATED', 'INTERNAL']),
+  description: z.string().optional()
+})
+
 const ModelsResponseSchema = z.object({
-  models: z.array(ModelSchema)
+  models: z.array(ModelSchema),
+  redirections: z.array(RedirectionSchema).optional().default([])
 })
 
 const AlephResponseSchema = z.object({
@@ -51,6 +59,7 @@ const modelsData = ref(null)
 const loading = ref(true)
 const error = ref(null)
 const parseError = ref(null)
+const deprecatedRedirections = ref([])
 
 // Fetch and validate data
 const fetchModelsData = async () => {
@@ -63,6 +72,12 @@ const fetchModelsData = async () => {
     // Filter only text models
     const textModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.text)
     modelsData.value = { models: textModels }
+
+    // Filter DEPRECATED redirections that point to text models
+    const textModelIds = new Set(textModels.map(m => m.id))
+    deprecatedRedirections.value = validatedData.data.LTAI_PRICING.redirections
+      .filter(r => r.type === 'DEPRECATED' && textModelIds.has(r.to))
+
     loading.value = false
   } catch (err) {
     if (err.errors) {
@@ -246,4 +261,31 @@ Different model categories have different pricing tiers.
       </tr>
     </tbody>
   </table>
+</div>
+
+## Deprecated Models
+
+<div v-if="deprecatedRedirections.length > 0">
+  <p>The following model names have been deprecated but still work through automatic redirection.</p>
+  <div class="table-responsive">
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Old Model Name</th>
+          <th>Redirects To</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="r in deprecatedRedirections" :key="r.from">
+          <td><code>{{ r.from }}</code></td>
+          <td><code>{{ r.to }}</code></td>
+          <td>{{ r.description || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div v-else-if="!loading && !error">
+  <p>No deprecated models at this time.</p>
 </div>
