@@ -263,9 +263,8 @@ Different model categories have different pricing tiers.
   </table>
 </div>
 
-## Deprecated Models
-
 <div v-if="deprecatedRedirections.length > 0">
+  <h2>Deprecated Models</h2>
   <p>The following model names have been deprecated but still work through automatic redirection.</p>
   <div class="table-responsive">
     <table class="pricing-table">
@@ -285,7 +284,4 @@ Different model categories have different pricing tiers.
       </tbody>
     </table>
   </div>
-</div>
-<div v-else-if="!loading && !error && !parseError">
-  <p>No deprecated models at this time.</p>
 </div>
