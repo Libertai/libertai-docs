@@ -3,7 +3,8 @@
 All of our text generation models support the following endpoints:
 - `/v1/completions`: OpenAI-compatible [Completions API](https://platform.openai.com/docs/api-reference/completions) endpoint
 - `/v1/chat/completions`: OpenAI-compatible [Chat Completions API](https://platform.openai.com/docs/api-reference/chat/create) endpoint
-- `v1/models`: OpenAI-compatible endpoint to [list the available models](https://platform.openai.com/docs/api-reference/models/list)
+- `/v1/messages`: Anthropic-compatible [Messages API](https://docs.anthropic.com/en/api/messages) endpoint
+- `/v1/models`: OpenAI-compatible endpoint to [list the available models](https://platform.openai.com/docs/api-reference/models/list)
 - `/completions`: llama.cpp-style completions endpoint
 
 > 💡 More endpoints will be provided in the future. If you have a specific need, feel free to [contact us on Telegram](https://t.me/libertai)!
