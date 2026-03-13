@@ -11,7 +11,8 @@ export default defineConfig({
     description: "LibertAI.io official documentation",
 
     head: [
-        ['link', {rel: 'icon', href: '/favicon.ico'}]
+        ['link', {rel: 'icon', href: '/favicon.ico'}],
+        ['script', {defer: '', src: 'https://analytics-01.testnet.network/script.js', 'data-website-id': '1060ebb7-81d2-4b7a-b14d-b837e8ccc6ea'}]
     ],
 
     // cleanUrls: true, TODO: Check if this can be enabled if deployed on Aleph
