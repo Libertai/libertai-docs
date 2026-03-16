@@ -67,6 +67,14 @@ export default defineConfig({
                     },
                 ]
             },
+            {
+                text: "Agents",
+                collapsed: false,
+                link: "/agents/",
+                items: [
+                    {text: "Getting started", link: "/agents/getting-started"},
+                ]
+            },
         ],
 
         editLink: {
