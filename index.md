@@ -40,7 +40,7 @@ features:
     linkText: Try LiberClaw
   - title: AI Agents
     icon: 🤖
-    details: Build autonomous agents with function calling. Compatible with Pydantic AI and LangChain, deployable on Aleph Cloud.
+    details: Build autonomous agents that pay for their own compute and inference with x402, powered by Aleph Cloud and LibertAI.
     link: /agents
     linkText: Learn more
   - title: Decentralized
