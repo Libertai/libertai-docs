@@ -151,11 +151,25 @@ while (true) {
 
 ## Full example
 
-See the complete working example in the [libertai-agents repository](https://github.com/Libertai/libertai-agents/tree/main/examples/agentkit).
+See the complete working examples in the libertai-agents repository:
+- [TypeScript example](https://github.com/Libertai/libertai-agents/tree/main/examples/agentkit/typescript)
+- [Python example](https://github.com/Libertai/libertai-agents/tree/main/examples/agentkit/python)
+
+## Python
+
+A Python port of the plugin is also available:
+
+```sh
+pip install libertai-agentkit-plugin
+```
+
+It provides the same functionality using `coinbase-agentkit` and `libertai-x402` Python packages. See the [Python README](https://github.com/Libertai/libertai-agents/tree/main/packages/agentkit-plugin/python) for usage.
 
 ## Links
 
 - [npm package](https://www.npmjs.com/package/@libertai/agentkit-plugin)
-- [GitHub source](https://github.com/Libertai/libertai-agents/tree/main/packages/agentkit-plugin)
+- [PyPI package](https://pypi.org/project/libertai-agentkit-plugin/)
+- [GitHub source (TypeScript)](https://github.com/Libertai/libertai-agents/tree/main/packages/agentkit-plugin/typescript)
+- [GitHub source (Python)](https://github.com/Libertai/libertai-agents/tree/main/packages/agentkit-plugin/python)
 - [Coinbase AgentKit](https://github.com/coinbase/agentkit)
 - [x402 payments](/apis/x402)

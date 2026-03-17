@@ -12,12 +12,12 @@ Your agent holds a wallet, calls LibertAI models via [x402](/apis/x402), and man
 
 ## Stack
 
-| Layer     | What                             | Package                     |
-| --------- | -------------------------------- | --------------------------- |
-| Framework | Coinbase AgentKit                | `@coinbase/agentkit`        |
-| Inference | LibertAI API (OpenAI-compatible) | `openai`                    |
-| Payment   | x402 protocol                    | `@libertai/x402`            |
-| Plugin    | Wallet, credits, tools bridge    | `@libertai/agentkit-plugin` |
+| Layer     | What                             | TypeScript                  | Python                     |
+| --------- | -------------------------------- | --------------------------- | -------------------------- |
+| Framework | Coinbase AgentKit                | `@coinbase/agentkit`        | `coinbase-agentkit`        |
+| Inference | LibertAI API (OpenAI-compatible) | `openai`                    | `openai`                   |
+| Payment   | x402 protocol                    | `@libertai/x402`            | `libertai-x402`            |
+| Plugin    | Wallet, credits, tools bridge    | `@libertai/agentkit-plugin` | `libertai-agentkit-plugin` |
 
 ## Get started
 
