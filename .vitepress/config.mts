@@ -73,6 +73,7 @@ export default defineConfig({
                 link: "/agents/",
                 items: [
                     {text: "Getting started", link: "/agents/getting-started"},
+                    {text: "Deployment", link: "/agents/deployment"},
                 ]
             },
         ],

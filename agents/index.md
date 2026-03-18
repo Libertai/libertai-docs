@@ -21,4 +21,4 @@ Your agent holds a wallet, calls LibertAI models via [x402](/apis/x402), and man
 
 ## Get started
 
-Follow the [Getting started](./getting-started) guide to create your first autonomous agent.
+Follow the [Getting started](./getting-started) guide to create your first autonomous agent, then [deploy it](./deployment) to Aleph Cloud with a single command.
