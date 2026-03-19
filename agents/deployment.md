@@ -38,7 +38,7 @@ my-agent/
 
 **Dockerfile**
 ```dockerfile
-FROM node:22-slim
+FROM node:24
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
@@ -77,6 +77,8 @@ my-agent/
 **Dockerfile**
 ```dockerfile
 FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 COPY requirements.txt .
