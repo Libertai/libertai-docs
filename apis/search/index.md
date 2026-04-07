@@ -1,7 +1,9 @@
 # Web Search
 
-LibertAI offers web search models with competitive pricing.\
+LibertAI offers web search models with competitive pricing.
 These models are currently available through [LiberClaw.ai](https://liberclaw.ai) and are not directly accessible via the API.
+
+You can find usage examples in various languages [here](./usage.md).
 
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -146,7 +148,7 @@ code {
 }
 </style>
 
-## Available Search Providers
+## Available Models
 
 <div v-if="modelsData" class="models-list">
   <div v-for="model in modelsData.models" :key="model.id" class="model-card">

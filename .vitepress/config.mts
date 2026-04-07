@@ -62,6 +62,15 @@ export default defineConfig({
                         ]
                     },
                     {
+                        text: "Search",
+                        link: "/apis/search/",
+                        items: [
+                            {text: "Available providers", link: "/apis/search/#available-models"},
+                            {text: "Pricing", link: "/apis/search/#pricing"},
+                            {text: "Usage", link: "/apis/search/usage"},
+                        ]
+                    },
+                    {
                         text: "x402 payments",
                         link: "/apis/x402",
                     },
