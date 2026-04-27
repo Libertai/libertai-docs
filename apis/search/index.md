@@ -1,7 +1,6 @@
 # Web Search
 
-LibertAI offers web search models with competitive pricing.
-These models are currently available through [LiberClaw.ai](https://liberclaw.ai) and are not directly accessible via the API.
+LibertAI offers web search across multiple providers with competitive pricing, with results aggregated and de-duplicated across engines.
 
 You can find usage examples in various languages [here](./usage.md).
 

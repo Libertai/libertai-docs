@@ -1,10 +1,12 @@
 # Usage
 
-The search API provides the following endpoints:
+The search API provides the following endpoints on `https://api.libertai.io`:
 - `POST /search`: Search across multiple engines (Google, Bing, DuckDuckGo)
-- `POST /fetch`: Fetch and clean content from a URL
-- `GET /health`: Health check endpoint
-- `GET /workers`: List available workers (no auth required)
+- `POST /search/fetch`: Fetch and clean content from a URL
+- `GET /search/health`: Health check (no auth required)
+- `GET /search/workers`: List available workers (no auth required)
+
+`/search` and `/search/fetch` require an API key. Create one in the [Developer console](https://console.libertai.io).
 
 ## API Reference
 
@@ -23,12 +25,12 @@ Search the web across multiple engines simultaneously. Results are aggregated, d
 }
 ```
 
-| Field | Required | Default | Description |
-|-------|----------|---------|-------------|
-| `query` | Yes | | Search query string |
-| `engines` | No | `["google", "bing", "duckduckgo"]` | Engines to query: `google`, `bing`, `duckduckgo` |
-| `max_results` | No | `10` | Maximum results per engine |
-| `search_type` | No | `"web"` | Type of search: `web`, `news`, `images` |
+| Field         | Required | Default                            | Description                                      |
+| ------------- | -------- | ---------------------------------- | ------------------------------------------------ |
+| `query`       | Yes      |                                    | Search query string                              |
+| `engines`     | No       | `["google", "bing", "duckduckgo"]` | Engines to query: `google`, `bing`, `duckduckgo` |
+| `max_results` | No       | `10`                               | Maximum results per engine                       |
+| `search_type` | No       | `"web"`                            | Type of search: `web`, `news`, `images`          |
 
 **Response:**
 
@@ -54,7 +56,7 @@ Search the web across multiple engines simultaneously. Results are aggregated, d
 }
 ```
 
-### POST `/fetch`
+### POST `/search/fetch`
 
 Fetch a URL and return its cleaned readable text content.
 
@@ -82,7 +84,7 @@ Fetch a URL and return its cleaned readable text content.
 == Shell
 ```sh
 # Web Search
-curl -X POST https://search.libertai.io/search \
+curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
@@ -92,7 +94,7 @@ curl -X POST https://search.libertai.io/search \
   }'
 
 # News Search
-curl -X POST https://search.libertai.io/search \
+curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
@@ -103,7 +105,7 @@ curl -X POST https://search.libertai.io/search \
   }'
 
 # Image Search
-curl -X POST https://search.libertai.io/search \
+curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
@@ -114,7 +116,7 @@ curl -X POST https://search.libertai.io/search \
   }'
 
 # Fetch URL Content
-curl -X POST https://search.libertai.io/fetch \
+curl -X POST https://api.libertai.io/search/fetch \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
@@ -128,7 +130,7 @@ import requests
 
 # Web Search
 response = requests.post(
-    "https://search.libertai.io/search",
+    "https://api.libertai.io/search",
     headers={
         "Authorization": "Bearer YOUR_API_KEY",
         "Content-Type": "application/json"
@@ -148,7 +150,7 @@ for result in results["results"]:
 
 # News Search
 news_response = requests.post(
-    "https://search.libertai.io/search",
+    "https://api.libertai.io/search",
     headers={"Authorization": "Bearer YOUR_API_KEY"},
     json={
         "query": "artificial intelligence",
@@ -159,7 +161,7 @@ news_response = requests.post(
 
 # Fetch content
 fetch_response = requests.post(
-    "https://search.libertai.io/fetch",
+    "https://api.libertai.io/search/fetch",
     headers={"Authorization": "Bearer YOUR_API_KEY"},
     json={"url": "https://doc.rust-lang.org/book/"}
 )
@@ -174,7 +176,7 @@ print(f"Word count: {content['word_count']}")
 import fetch from 'node-fetch';
 
 // Web Search
-const response = await fetch('https://search.libertai.io/search', {
+const response = await fetch('https://api.libertai.io/search', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -194,7 +196,7 @@ for (const result of data.results) {
 }
 
 // News Search
-const newsResponse = await fetch('https://search.libertai.io/search', {
+const newsResponse = await fetch('https://api.libertai.io/search', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -208,7 +210,7 @@ const newsResponse = await fetch('https://search.libertai.io/search', {
 });
 
 // Fetch content
-const fetchResponse = await fetch('https://search.libertai.io/fetch', {
+const fetchResponse = await fetch('https://api.libertai.io/search/fetch', {
   method: 'POST',
   headers: {
     'Authorization': 'Bearer YOUR_API_KEY',
@@ -235,7 +237,7 @@ Results appearing in multiple engines are ranked higher. Use the `found_in` arra
 import requests
 
 response = requests.post(
-    "https://search.libertai.io/search",
+    "https://api.libertai.io/search",
     json={"query": "rust programming", "engines": ["google", "bing", "duckduckgo"]}
 )
 
@@ -255,18 +257,18 @@ from requests.exceptions import RequestException
 
 try:
     response = requests.post(
-        "https://search.libertai.io/search",
+        "https://api.libertai.io/search",
         json={"query": "test", "engines": ["google", "bing"]},
         timeout=30
     )
-    
+
     if response.status_code == 503:
         print("All engines failed")
     else:
         data = response.json()
         print(f"Engines used: {data['meta']['engines_used']}")
         print(f"Engines failed: {data['meta']['engines_failed']}")
-        
+
 except RequestException as e:
     print(f"Request failed: {e}")
 ```
@@ -274,7 +276,7 @@ except RequestException as e:
 ### Image Search with Metadata
 
 ```javascript
-const response = await fetch('https://search.libertai.io/search', {
+const response = await fetch('https://api.libertai.io/search', {
   method: 'POST',
   headers: { 'Authorization': 'Bearer YOUR_API_KEY' },
   body: JSON.stringify({
@@ -305,18 +307,18 @@ for (const result of data.results) {
 ## Supported Search Types
 
 | Search Type | Google | Bing | DuckDuckGo |
-|-------------|--------|------|-------------|
-| `web` | Yes | Yes | Yes |
-| `news` | Yes | Yes | No |
-| `images` | Yes | Yes | No |
+| ----------- | ------ | ---- | ---------- |
+| `web`       | Yes    | Yes  | Yes        |
+| `news`      | Yes    | Yes  | No         |
+| `images`    | Yes    | Yes  | No         |
 
 ### Response Fields by Search Type
 
-| Field | Present for | Description |
-|-------|------------|-------------|
-| `thumbnail_url` | `images` | Thumbnail image URL |
-| `image_url` | `images` | Full-size image URL |
-| `width` | `images` | Image width in pixels |
-| `height` | `images` | Image height in pixels |
-| `published_at` | `news` | Publication date |
-| `source` | `news` | News source name |
+| Field           | Present for | Description            |
+| --------------- | ----------- | ---------------------- |
+| `thumbnail_url` | `images`    | Thumbnail image URL    |
+| `image_url`     | `images`    | Full-size image URL    |
+| `width`         | `images`    | Image width in pixels  |
+| `height`        | `images`    | Image height in pixels |
+| `published_at`  | `news`      | Publication date       |
+| `source`        | `news`      | News source name       |
