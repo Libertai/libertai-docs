@@ -4,7 +4,7 @@ Deploy your agent to [Aleph Cloud](https://aleph.cloud) using the LibertAI CLI. 
 
 ## Prerequisites
 
-- Python 3.10+
+- Python 3.11+ (≤ 3.13)
 - An agent project with a `docker-compose.yml` at the root
 - An SSH key pair (auto-detected from `~/.ssh/` or pass `--ssh-key`)
 

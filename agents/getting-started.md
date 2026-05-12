@@ -41,7 +41,7 @@ import { createAgentWallet } from "@libertai/agentkit-plugin";
 import { base } from "viem/chains";
 
 const wallet = await createAgentWallet(
-  process.env.PRIVATE_KEY as `0x${string}`,
+  process.env.WALLET_PRIVATE_KEY as `0x${string}`,
   base,
 );
 
@@ -56,7 +56,7 @@ Register action providers — these define what tools the agent can use:
 import { AgentKit, walletActionProvider, erc20ActionProvider } from "@coinbase/agentkit";
 import { createAlephActionProvider } from "@libertai/agentkit-plugin";
 
-const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
+const privateKey = process.env.WALLET_PRIVATE_KEY as `0x${string}`;
 
 const agentkit = await AgentKit.from({
   walletProvider: wallet.provider,
@@ -112,7 +112,7 @@ while (true) {
   ];
 
   let response = await openai.chat.completions.create({
-    model: "qwen3.5-35b-a3b",
+    model: "qwen3.6-35b-a3b",
     messages,
     tools,
   });
@@ -135,7 +135,7 @@ while (true) {
     }
 
     response = await openai.chat.completions.create({
-      model: "qwen3.5-35b-a3b",
+      model: "qwen3.6-35b-a3b",
       messages,
       tools,
     });

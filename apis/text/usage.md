@@ -90,7 +90,7 @@ curl -X POST https://api.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "gemma-3-27b",
+    "model": "gemma-4-31b-it",
     "messages": [
       {
         "role": "user",
@@ -118,7 +118,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="gemma-3-27b",
+    model="gemma-4-31b-it",
     messages=[
         {
             "role": "user",
@@ -148,7 +148,7 @@ const client = new OpenAI({
 });
 
 const completion = await client.chat.completions.create({
-  model: "gemma-3-27b",
+  model: "gemma-4-31b-it",
   messages: [
     {
       role: "user",
@@ -281,9 +281,5 @@ console.log(completion.choices[0].message.content);
 - **Hosts can change** — the `servers` list reflects the network's current state. Re-query `/libertai/models`
   periodically rather than hardcoding URLs.
 - **TEE confidentiality** — for models running in a TEE (look for `🔒` on the [models list](./index.md#available-models)),
-  calling the host directly minimizes the parties that see your prompt. Combine with TEE attestation
-  (see [Verifiable computing with TEE](#verifiable-computing-with-tee)) to verify the host is what it claims to be.
-
-## Verifiable computing with TEE
-
-Coming soon...
+  calling the host directly minimizes the parties that see your prompt. See [Trust model & TEE](/concepts/trust-model)
+  for what's guaranteed today and how remote attestation will work.
