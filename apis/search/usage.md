@@ -211,6 +211,10 @@ const response = await fetch(`${BASE}/search`, {
     max_results: 10,
   }),
 });
+if (!response.ok) {
+  // 503 means every engine failed; other codes are auth/quota/validation issues
+  throw new Error(`Search failed: ${response.status}`);
+}
 const data = await response.json();
 
 for (const result of data.results) {

@@ -108,7 +108,7 @@ export default defineConfig({
         ],
 
         editLink: {
-            pattern: 'https://github.com/libertai/libertai-docs/edit/main/:path',
+            pattern: 'https://github.com/Libertai/libertai-docs/edit/main/:path',
             text: 'Edit this page on GitHub'
         },
 
