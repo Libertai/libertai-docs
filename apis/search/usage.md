@@ -274,6 +274,13 @@ else:
         print(f"  {err['engine']}: {err['reason']}")
 ```
 
+## Direct host access?
+
+Unlike the [text](../text/usage.md#direct-model-interaction) and image APIs, search has no per-CRN host you can call
+directly — `/search` is gateway-only. Workers run behind a single upstream pool and are not registered in
+`/libertai/models`. If you need to remove the gateway from your trust path, use a TEE-backed text model with direct
+CRN access instead, then perform retrieval yourself.
+
 ## Consensus scoring
 
 Results returned by multiple engines are stronger signals. Rank or filter on `found_in`:

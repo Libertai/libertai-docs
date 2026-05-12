@@ -170,11 +170,186 @@ console.log(completion.choices[0].message.content);
 
 :::
 
+### Streaming
+
+Pass `stream: true` to receive tokens incrementally as they're generated. The endpoint emits server-sent events
+matching the OpenAI streaming format.
+
+:::tabs
+
+== Shell
+```sh
+curl -N -X POST https://api.libertai.io/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{
+    "model": "gemma-4-31b-it",
+    "stream": true,
+    "messages": [
+      { "role": "user", "content": "Count from 1 to 5, one number per line." }
+    ]
+  }'
+```
+
+== Python
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="https://api.libertai.io/v1", api_key="YOUR_API_KEY")
+
+stream = client.chat.completions.create(
+    model="gemma-4-31b-it",
+    messages=[{"role": "user", "content": "Count from 1 to 5, one number per line."}],
+    stream=True,
+)
+
+for chunk in stream:
+    delta = chunk.choices[0].delta.content
+    if delta:
+        print(delta, end="", flush=True)
+```
+
+== TypeScript
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://api.libertai.io/v1",
+  apiKey: "YOUR_API_KEY",
+});
+
+const stream = await client.chat.completions.create({
+  model: "gemma-4-31b-it",
+  messages: [{ role: "user", content: "Count from 1 to 5, one number per line." }],
+  stream: true,
+});
+
+for await (const chunk of stream) {
+  const delta = chunk.choices[0]?.delta?.content;
+  if (delta) process.stdout.write(delta);
+}
+```
+
+:::
+
+### Function (tool) calling
+
+Models flagged with ⚙️ on the [models list](./index.md#available-models) support OpenAI-style tool calls.
+
+:::tabs
+
+== Python
+```python
+from openai import OpenAI
+
+client = OpenAI(base_url="https://api.libertai.io/v1", api_key="YOUR_API_KEY")
+
+tools = [{
+    "type": "function",
+    "function": {
+        "name": "get_weather",
+        "description": "Get the current weather for a city",
+        "parameters": {
+            "type": "object",
+            "properties": {"city": {"type": "string"}},
+            "required": ["city"],
+        },
+    },
+}]
+
+resp = client.chat.completions.create(
+    model="gemma-4-31b-it",
+    messages=[{"role": "user", "content": "What's the weather in Paris?"}],
+    tools=tools,
+)
+
+tool_call = resp.choices[0].message.tool_calls[0]
+print(tool_call.function.name, tool_call.function.arguments)
+```
+
+== TypeScript
+```ts
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "https://api.libertai.io/v1",
+  apiKey: "YOUR_API_KEY",
+});
+
+const resp = await client.chat.completions.create({
+  model: "gemma-4-31b-it",
+  messages: [{ role: "user", content: "What's the weather in Paris?" }],
+  tools: [{
+    type: "function",
+    function: {
+      name: "get_weather",
+      description: "Get the current weather for a city",
+      parameters: {
+        type: "object",
+        properties: { city: { type: "string" } },
+        required: ["city"],
+      },
+    },
+  }],
+});
+
+const call = resp.choices[0].message.tool_calls?.[0];
+console.log(call?.function.name, call?.function.arguments);
+```
+
+:::
+
+After your code runs the tool, append a `role: "tool"` message with `tool_call_id` and `content` to the conversation
+and call the model again — same flow as the OpenAI API.
+
+### Anthropic Messages format
+
+The `/v1/messages` endpoint accepts requests in [Anthropic's Messages format](https://docs.anthropic.com/en/api/messages),
+so the Anthropic SDK works against LibertAI by changing the base URL.
+
+:::tabs
+
+== Shell
+```sh
+curl -X POST https://api.libertai.io/v1/messages \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "gemma-4-31b-it",
+    "max_tokens": 256,
+    "messages": [
+      { "role": "user", "content": "Hello!" }
+    ]
+  }'
+```
+
+== Python
+```python
+import anthropic
+
+client = anthropic.Anthropic(
+    base_url="https://api.libertai.io",
+    api_key="YOUR_API_KEY",
+)
+
+msg = client.messages.create(
+    model="gemma-4-31b-it",
+    max_tokens=256,
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+
+print(msg.content[0].text)
+```
+
+:::
+
 ## Direct model interaction
 
 You can bypass the `api.libertai.io` load balancer and call a model's CRN (computing resource node) directly.
 This is useful when you want as few intermediaries as possible — for data confidentiality, latency, or to talk to a
-specific instance such as one running in a [Trusted Execution Environment](https://docs.aleph.cloud/computing/confidential).
+specific instance such as one running in a Trusted Execution Environment. See
+[Trust model & TEE](/concepts/trust-model) for what each layer protects against.
 
 ### Discover the hosts for a model
 
@@ -283,3 +458,36 @@ console.log(completion.choices[0].message.content);
 - **TEE confidentiality** — for models running in a TEE (look for `🔒` on the [models list](./index.md#available-models)),
   calling the host directly minimizes the parties that see your prompt. See [Trust model & TEE](/concepts/trust-model)
   for what's guaranteed today and how remote attestation will work.
+
+## Verifying your API key
+
+`GET /libertai/auth/check` returns `200 OK` if your key is valid, `401 Unauthorized` otherwise — useful for sanity-checking
+configuration during onboarding without spending tokens.
+
+```sh
+curl -i https://api.libertai.io/libertai/auth/check \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Errors
+
+| Status | Meaning | What to do |
+|--------|---------|------------|
+| `400` | Malformed request body | Fix the request shape; check JSON syntax and required fields |
+| `401` | Missing or invalid API key | Verify your key in the [Console](https://console.libertai.io) or via `/libertai/auth/check` |
+| `402` | Payment required (x402 flow) | Sign and resubmit with `X-PAYMENT` — see [x402](/apis/x402) |
+| `404` | Unknown model | Pull the list from `/v1/models` or `/libertai/models` |
+| `422` | Validation error | Check field types and enum values |
+| `429` | Too many requests | Back off and retry; reduce concurrency |
+| `503` | All servers failed for this model | Retry shortly — the gateway tried every CRN and none responded |
+
+Errors return JSON of the form `{"detail": "..."}`. Streaming responses can fail mid-stream — handle `error` events
+in your SSE consumer.
+
+## See also
+
+- [Available models & pricing](./index.md)
+- [Direct CRN access](#direct-model-interaction)
+- [x402 payments](/apis/x402) — pay per request without an API key
+- [Trust model & TEE](/concepts/trust-model)
+- [Architecture](/architecture)
