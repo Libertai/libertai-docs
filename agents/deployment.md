@@ -111,6 +111,19 @@ services:
 `-alpine` base images — Aleph VMs are billed for storage, and the default disk is small.
 :::
 
+::: warning Compose version
+The `env_file: [{ path, required }]` syntax above needs Docker Compose **v2.24+**. The CLI installs a recent Docker
+on the VM, so deploys are fine; if you're testing locally with an older Compose, fall back to the flat list form:
+
+```yaml
+env_file:
+  - .env.prod
+  - .env
+```
+
+The flat form requires both files to exist — touch an empty `.env` if you don't have one.
+:::
+
 ## Deploy
 
 From your agent directory:

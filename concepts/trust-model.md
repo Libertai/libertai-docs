@@ -50,7 +50,7 @@ itself, but not to the human running the box.
   If that matters, talk directly to the model host (see [Direct model interaction](/apis/text/usage#direct-model-interaction))
   to remove the gateway, or front the call with your own egress.
 - **Logged outputs** — the SEV boundary protects the VM, not whatever your client does with the response.
-- **Model behaviour** — TEE proves the *operator* didn't read your data. It does not prove the *model* is
+- **Model behavior** — TEE proves the *operator* didn't read your data. It does not prove the *model* is
   trustworthy or hasn't been fine-tuned in a particular way.
 
 ## Remote attestation — status
