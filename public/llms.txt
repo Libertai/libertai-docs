@@ -1,0 +1,39 @@
+# LibertAI
+
+> LibertAI is a decentralized AI platform running open-source models (Qwen, Gemma, DeepSeek, Hermes) on the Aleph Cloud distributed compute network. It exposes OpenAI- and Anthropic-compatible APIs for text, image, and web search, plus a runtime for autonomous agents that pay for their own inference and compute via x402 (USDC on Base). Selected models run inside AMD SEV Trusted Execution Environments so the node operator can't read prompts or completions.
+
+The base URL for all APIs is `https://api.libertai.io`. Authentication uses either a Bearer API key from the [Developer console](https://console.libertai.io) or [x402](https://docs.libertai.io/apis/x402) per-request crypto payments. Model discovery: `GET /v1/models` (OpenAI format) or `GET /libertai/models` (returns servers backing each model so clients can call CRN hosts directly).
+
+## Getting started
+
+- [What is LibertAI?](https://docs.libertai.io/what-is-libertai): One-page overview of the platform, modalities, and how it differs from proprietary APIs.
+- [Quickstart](https://docs.libertai.io/quickstart): First call in curl / Python / TypeScript, plus diff snippets for swapping from OpenAI and Anthropic SDKs.
+- [Architecture](https://docs.libertai.io/architecture): Request flow from load balancer to CRN to inference VM.
+
+## APIs
+
+- [APIs overview](https://docs.libertai.io/apis/): Comparison table of text, image, and search APIs.
+- [Text API](https://docs.libertai.io/apis/text/): Live model list, pricing, capabilities (vision, function calling, reasoning, TEE), context windows.
+- [Text usage](https://docs.libertai.io/apis/text/usage): Chat completions, vision, streaming, function/tool calling, Anthropic Messages format, direct CRN host access, error codes, /libertai/auth/check.
+- [Image API](https://docs.libertai.io/apis/image/): Stable Diffusion WebUI (`/sdapi/v1/txt2img`) and OpenAI-compatible (`/v1/images/generations`) endpoints; current model is `z-image-turbo`.
+- [Search API](https://docs.libertai.io/apis/search/): Multi-engine web search with consensus ranking; available engines and pricing.
+- [Search usage](https://docs.libertai.io/apis/search/usage): `/search` and `/search/fetch` endpoints, engine × search_type matrix (web/news/images/academic across google/bing/duckduckgo/brave/semantic_scholar), partial-result and billing semantics.
+- [x402 payments](https://docs.libertai.io/apis/x402): Pay per request in USDC on Base instead of using an API key — useful for autonomous agents.
+
+## Concepts
+
+- [Trust model & TEE](https://docs.libertai.io/concepts/trust-model): What each layer (gateway, CRN, VM) can see; what AMD SEV guarantees for TEE-flagged models; current status of remote attestation tooling.
+
+## Agents
+
+- [Agents overview](https://docs.libertai.io/agents/): When to use the LibertAI agent stack vs. orchestration frameworks like LangGraph/CrewAI; the four-layer stack (AgentKit + OpenAI SDK + x402 + libertai-agentkit-plugin).
+- [Agents — Getting started](https://docs.libertai.io/agents/getting-started): TypeScript and Python walkthroughs for building a wallet-funded agent loop with tool calling.
+- [Agents — Deployment](https://docs.libertai.io/agents/deployment): `libertai agentkit deploy` flow, VM specs (2 vCPU / 4 GB RAM / Debian 12), redeploy, logs, secrets handling.
+
+## Optional
+
+- [Console](https://console.libertai.io): API key management and usage dashboard.
+- [Chat interface](https://chat.libertai.io): User-facing chat UI on LibertAI models.
+- [LiberClaw](https://liberclaw.ai): LibertAI's sovereign assistant frontend.
+- [GitHub — libertai-agents](https://github.com/Libertai/libertai-agents): SDK source for both TypeScript and Python.
+- [Aleph confidential computing](https://docs.aleph.cloud/devhub/compute-resources/confidential-instances/01-confidential-instance-introduction): Underlying AMD SEV docs for the TEE option.
