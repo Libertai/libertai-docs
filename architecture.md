@@ -12,3 +12,9 @@ On-demand, the virtual machine is started, with the inference app already on the
 ![Inside the VM](/assets/inside-vm.png)
 
 The request is passed to the inference stack, that will process the context, do the generation and get you the result back. For better performance, a cookie is set by the load balancer that acts as a sticky session, so you always end up on the same VM for faster inference on linked contexts (it's useful for text generation on chat use-cases).
+
+## Going further
+
+- [Trust model & TEE](/concepts/trust-model) — what each component sees, and how confidential VMs change the picture
+- [Direct model interaction](/apis/text/usage#direct-model-interaction) — call a CRN host without the gateway
+- [Quickstart](/quickstart) — your first API call in five minutes
