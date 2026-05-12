@@ -291,3 +291,9 @@ for result in response.json()["results"]:
     if consensus >= 2:
         print(f"{consensus} engines agree: {result['title']}")
 ```
+
+## See also
+
+- [Engines & pricing](./index.md)
+- [x402 payments](/apis/x402) — pay per request without an API key
+- [Architecture](/architecture)

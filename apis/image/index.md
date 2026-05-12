@@ -1,198 +1,18 @@
-# Image Generation
+# Image generation
 
-LibertAI offers image generation models with competitive pricing.\
-Generate high-quality images from text prompts using our API.
+LibertAI offers image generation models with competitive pricing. Generate high-quality images from text prompts via
+two compatible endpoints — Stable Diffusion WebUI and OpenAI's image generation format.
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import { z } from 'zod'
+<ModelsPricing category="image" />
 
-// Define schema for data validation
-const ImagePricingSchema = z.number()
+## API endpoints
 
-const ModelSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  hf_id: z.string().optional(),
-  capabilities: z.object({
-    text: z.object({
-      context_window: z.number(),
-      function_calling: z.boolean(),
-      reasoning: z.boolean(),
-      tee: z.boolean().optional(),
-      vision: z.boolean()
-    }).optional(),
-    image: z.boolean().optional(),
-    search: z.boolean().optional()
-  }),
-  pricing: z.object({
-    text: z.object({
-      price_per_million_input_tokens: z.number(),
-      price_per_million_output_tokens: z.number(),
-    }).optional(),
-    image: ImagePricingSchema.optional(),
-    search: z.number().optional()
-  })
-})
+### Stable Diffusion WebUI API (sdapi)
 
-const RedirectionSchema = z.object({
-  from: z.string(),
-  to: z.string(),
-  type: z.enum(['DEPRECATED', 'INTERNAL']),
-  category: z.string(),
-  description: z.string().optional()
-})
+Compatible with the Stable Diffusion WebUI format.
 
-const ModelsResponseSchema = z.object({
-  models: z.array(ModelSchema),
-  redirections: z.array(RedirectionSchema).optional().default([])
-})
+- **Endpoint:** `POST https://api.libertai.io/sdapi/v1/txt2img`
 
-const AlephResponseSchema = z.object({
-  data: z.object({
-    LTAI_PRICING: ModelsResponseSchema,
-  }),
-})
-
-const modelsData = ref(null)
-const loading = ref(true)
-const error = ref(null)
-const parseError = ref(null)
-const deprecatedRedirections = ref([])
-
-// Fetch and validate data
-const fetchModelsData = async () => {
-  try {
-    const response = await fetch('https://api2.aleph.im/api/v0/aggregates/0xe1F7220D201C64871Cefb25320a8a588393eE508.json?keys=LTAI_PRICING')
-    const data = await response.json()
-
-    // Validate data with Zod schema
-    const validatedData = AlephResponseSchema.parse(data)
-    // Filter only image models
-    const imageModels = validatedData.data.LTAI_PRICING.models.filter(model => model.capabilities.image)
-    modelsData.value = { models: imageModels }
-
-    // Filter DEPRECATED redirections for image models
-    deprecatedRedirections.value = validatedData.data.LTAI_PRICING.redirections
-      .filter(r => r.type === 'DEPRECATED' && r.category === 'image')
-
-    loading.value = false
-  } catch (err) {
-    if (err.errors) {
-      // This is a Zod validation error
-      console.error(err.errors)
-      parseError.value = `Validation error: ${err.errors.map(e => e.message).join(', ')}`
-    } else {
-      // This is a fetch or other error
-      error.value = err
-    }
-    loading.value = false
-  }
-}
-
-onMounted(fetchModelsData)
-</script>
-
-<div v-if="loading" class="loading">Loading models & pricing...</div>
-<div v-else-if="parseError" class="error">{{ parseError }}</div>
-<div v-else-if="error" class="error">Failed to load models & pricing. Please try again later.</div>
-<div v-else-if="!modelsData" class="no-data">No data available</div>
-
-<style>
-.models-list {
-  margin: 2rem 0;
-}
-.pricing-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.pricing-table th, .pricing-table td {
-  border: 1px solid var(--vp-c-divider);
-  padding: 0.6rem;
-  text-align: left;
-}
-.pricing-table th {
-  background-color: var(--vp-c-bg-soft);
-}
-.table-responsive {
-  overflow-x: auto;
-}
-.loading, .error, .no-data {
-  padding: 1rem;
-  border-radius: 4px;
-  margin: 1rem 0;
-}
-.loading {
-  background-color: var(--vp-c-bg-soft);
-}
-.error {
-  background-color: rgba(255, 0, 0, 0.1);
-  color: var(--vp-c-danger);
-}
-code {
-  color: initial !important;
-}
-.model-card {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  border-radius: 6px;
-  background-color: var(--vp-c-bg-soft);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.model-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-</style>
-
-## Available Models
-
-<div v-if="modelsData" class="models-list">
-  <div v-for="model in modelsData.models" :key="model.id" class="model-card">
-    <div class="model-header">
-      <div>
-        <strong>{{ model.name }}</strong> (<code>{{ model.id }}</code>)
-      </div>
-      <a v-if="model.hf_id" :href="`https://huggingface.co/${model.hf_id}`" target="_blank" rel="noopener noreferrer">View on HF</a>
-    </div>
-  </div>
-</div>
-
-## Pricing
-
-Image generation pricing is per image generated.
-
-<div v-if="modelsData" class="table-responsive">
-  <table class="pricing-table">
-    <thead>
-      <tr>
-        <th>Model</th>
-        <th>Price per Image</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="model in modelsData.models" :key="model.id">
-        <td>{{ model.name }}</td>
-        <td>${{ model.pricing.image.toFixed(4) }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-## API Endpoints
-
-LibertAI provides two compatible endpoints for image generation:
-
-### 1. Stable Diffusion WebUI API (sdapi)
-
-Compatible with Stable Diffusion WebUI format.
-
-**Endpoint:** `POST https://api.libertai.io/sdapi/v1/txt2img`
-
-**Request Body:**
 ```json
 {
   "model": "z-image-turbo",
@@ -202,20 +22,16 @@ Compatible with Stable Diffusion WebUI format.
 }
 ```
 
-**Response:**
 ```json
-{
-  "images": ["<base64_encoded_image>"]
-}
+{ "images": ["<base64_encoded_image>"] }
 ```
 
-### 2. OpenAI Compatible API
+### OpenAI-compatible API
 
 Compatible with [OpenAI's image generation format](https://platform.openai.com/docs/api-reference/images/create).
 
-**Endpoint:** `POST https://api.libertai.io/v1/images/generations`
+- **Endpoint:** `POST https://api.libertai.io/v1/images/generations`
 
-**Request Body:**
 ```json
 {
   "model": "z-image-turbo",
@@ -224,22 +40,16 @@ Compatible with [OpenAI's image generation format](https://platform.openai.com/d
 }
 ```
 
-**Response:**
 ```json
-{
-  "data": [
-    {
-      "b64_json": "<base64_encoded_image>"
-    }
-  ]
-}
+{ "data": [{ "b64_json": "<base64_encoded_image>" }] }
 ```
 
-## Usage Examples
+## Usage examples
 
-### Using curl
+:::tabs
 
-```bash
+== Shell
+```sh
 curl -s -X POST "https://api.libertai.io/sdapi/v1/txt2img" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -250,9 +60,8 @@ curl -s -X POST "https://api.libertai.io/sdapi/v1/txt2img" \
     "height": 512
   }' \
   | jq -r '.images[0]' | base64 -d > output.png
-```
 
-```bash
+# OpenAI-compatible
 curl -s -X POST "https://api.libertai.io/v1/images/generations" \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -264,156 +73,79 @@ curl -s -X POST "https://api.libertai.io/v1/images/generations" \
   | jq -r '.data[0].b64_json' | base64 -d > output.png
 ```
 
-### Using Python
-
-:::tabs
-== OpenAI SDK
+== Python
 ```python
-from openai import OpenAI
 import base64
+from openai import OpenAI
 
 client = OpenAI(
     api_key="YOUR_API_KEY",
-    base_url="https://api.libertai.io/v1"
+    base_url="https://api.libertai.io/v1",
 )
 
-response = client.images.generate(
+resp = client.images.generate(
     model="z-image-turbo",
     prompt="a cute cat, anime style",
     size="512x512",
-    response_format="b64_json"
+    response_format="b64_json",
 )
 
-# Save the image
-image_data = base64.b64decode(response.data[0].b64_json)
 with open("output.png", "wb") as f:
-    f.write(image_data)
+    f.write(base64.b64decode(resp.data[0].b64_json))
 ```
 
-== Requests
-```python
-import requests
-import base64
-
-response = requests.post(
-    "https://api.libertai.io/v1/images/generations",
-    headers={
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    },
-    json={
-        "model": "z-image-turbo",
-        "prompt": "a cute cat, anime style",
-        "size": "512x512"
-    }
-)
-
-# Save the image
-image_data = base64.b64decode(response.json()["data"][0]["b64_json"])
-with open("output.png", "wb") as f:
-    f.write(image_data)
-```
-:::
-
-### Using JavaScript/TypeScript
-
-:::tabs
-== Node.js
-```javascript
-import OpenAI from 'openai';
-import fs from 'fs';
+== TypeScript
+```ts
+import OpenAI from "openai";
+import fs from "fs";
 
 const client = new OpenAI({
-  apiKey: 'YOUR_API_KEY',
-  baseURL: 'https://api.libertai.io/v1'
+  apiKey: "YOUR_API_KEY",
+  baseURL: "https://api.libertai.io/v1",
 });
 
-const response = await client.images.generate({
-  model: 'z-image-turbo',
-  prompt: 'a cute cat, anime style',
-  size: '512x512',
-  response_format: 'b64_json'
+const resp = await client.images.generate({
+  model: "z-image-turbo",
+  prompt: "a cute cat, anime style",
+  size: "512x512",
+  response_format: "b64_json",
 });
 
-// Save the image
-const imageData = Buffer.from(response.data[0].b64_json, 'base64');
-fs.writeFileSync('output.png', imageData);
+fs.writeFileSync("output.png", Buffer.from(resp.data[0].b64_json, "base64"));
 ```
 
-== Fetch API
-```javascript
-const response = await fetch('https://api.libertai.io/v1/images/generations', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    model: 'z-image-turbo',
-    prompt: 'a cute cat, anime style',
-    size: '512x512'
-  })
-});
-
-const data = await response.json();
-
-// Save the image (browser)
-const imageData = atob(data.data[0].b64_json);
-const blob = new Blob([new Uint8Array([...imageData].map(c => c.charCodeAt(0)))], { type: 'image/png' });
-const url = URL.createObjectURL(blob);
-```
 :::
 
 ## Parameters
 
 ### Required
 
-- `model`: The model ID to use for generation (e.g., `z-image-turbo`)
-- `prompt`: Text description of the image to generate
-
-## Direct model interaction
-
-You can also call an image model's host directly, without going through `api.libertai.io`. Use the
-`GET /libertai/models` discovery endpoint to find the server URLs backing a model, then call the same
-`/sdapi/v1/txt2img` or `/v1/images/generations` paths on the host with your LibertAI API key.
-
-See [Direct model interaction](../text/usage.md#direct-model-interaction) in the text usage guide for the full pattern
-and trade-offs — it applies to every model type, image included.
+- `model` — model ID, e.g. `z-image-turbo`
+- `prompt` — text description of the image
 
 ### sdapi optional parameters
 
-- `width`: Image width in pixels (default: 1024)
-- `height`: Image height in pixels (default: 1024)
-- `steps`: Number of steps (default: 9, more steps = higher quality but slower)
-- `seed`: Seed to use to maintain consistency across generations
-- `n`: Number of images to generate (default: 1, max: 4)
-- `remove_background`: Enable to remove the background of the image after the generation (default: false)
+- `width`, `height` — image size in pixels (default: 1024)
+- `steps` — diffusion steps (default: 9 — more steps = higher quality, slower)
+- `seed` — seed for deterministic generation
+- `n` — number of images (default: 1, max: 4)
+- `remove_background` — strip the background post-generation (default: false)
 
 ### OpenAI-compatible optional parameters
 
-- `size`: Image size in format `WIDTHxHEIGHT` (e.g., `512x512`, default `1024x1024`)
-- `n`: Number of images to generate (default: 1, max: 4)
-- `remove_background`: Enable to remove the background of the image after the generation (default: false)
+- `size` — `WIDTHxHEIGHT` (e.g. `512x512`, default `1024x1024`)
+- `n` — number of images (default: 1, max: 4)
+- `remove_background` — strip the background post-generation (default: false)
 
-<div v-if="deprecatedRedirections.length > 0">
-  <h2>Deprecated Models</h2>
-  <p>The following model names have been deprecated but still work through automatic redirection.</p>
-  <div class="table-responsive">
-    <table class="pricing-table">
-      <thead>
-        <tr>
-          <th>Old Model Name</th>
-          <th>Redirects To</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="r in deprecatedRedirections" :key="r.from">
-          <td><code>{{ r.from }}</code></td>
-          <td><code>{{ r.to }}</code></td>
-          <td>{{ r.description || '-' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+## Direct model interaction
+
+You can call the image model's CRN host directly using `GET /libertai/models` for discovery and the same
+`/sdapi/v1/txt2img` or `/v1/images/generations` paths on the host with your LibertAI API key. The pattern, trade-offs,
+and code samples are documented once in the text guide:
+[Direct model interaction](../text/usage.md#direct-model-interaction).
+
+## See also
+
+- [Quickstart](/quickstart)
+- [x402 payments](/apis/x402) — pay per request without an API key
+- [Architecture](/architecture)
