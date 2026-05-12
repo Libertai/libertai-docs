@@ -371,6 +371,15 @@ const url = URL.createObjectURL(blob);
 - `model`: The model ID to use for generation (e.g., `z-image-turbo`)
 - `prompt`: Text description of the image to generate
 
+## Direct model interaction
+
+You can also call an image model's host directly, without going through `api.libertai.io`. Use the
+`GET /libertai/models` discovery endpoint to find the server URLs backing a model, then call the same
+`/sdapi/v1/txt2img` or `/v1/images/generations` paths on the host with your LibertAI API key.
+
+See [Direct model interaction](../text/usage.md#direct-model-interaction) in the text usage guide for the full pattern
+and trade-offs — it applies to every model type, image included.
+
 ### sdapi optional parameters
 
 - `width`: Image width in pixels (default: 1024)
