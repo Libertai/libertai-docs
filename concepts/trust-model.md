@@ -70,8 +70,7 @@ instance, and SEV enforces the runtime isolation. What's not yet available is a 
 fetch an SEV attestation report at request time and verify it against the published measurement. That's on the
 roadmap.
 
-If you're building something where attestation is load-bearing, [reach out](https://t.me/libertai) — we'd
-rather scope it with real users than ship something nobody needs.
+If you're building something where attestation is load-bearing, [reach out](https://t.me/libertai).
 
 ## Choosing the right level
 
