@@ -1,20 +1,24 @@
 # Usage
 
-The search API provides the following endpoints on `https://api.libertai.io`:
-- `POST /search`: Search across multiple engines (Google, Bing, DuckDuckGo)
-- `POST /search/fetch`: Fetch and clean content from a URL
-- `GET /search/health`: Health check (no auth required)
-- `GET /search/workers`: List available workers (no auth required)
+Search exposes two endpoints, both served through the main LibertAI gateway:
 
-`/search` and `/search/fetch` require an API key. Create one in the [Developer console](https://console.libertai.io).
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/search` | Query one or more engines in parallel and get a unified, deduplicated, consensus-ranked list of results |
+| `POST` | `/search/fetch` | Fetch a URL and return its cleaned readable text |
 
-## API Reference
+**Base URL:** `https://api.libertai.io`
 
-### POST `/search`
+**Authentication:** pass your LibertAI API key as `Authorization: Bearer YOUR_API_KEY` (get one from the
+[Developer console](https://console.libertai.io)). You can also pay per request without an API key via
+[x402 payments](../x402.md).
 
-Search the web across multiple engines simultaneously. Results are aggregated, deduplicated by URL, and ranked by cross-engine consensus.
+## `POST /search`
 
-**Request:**
+Run the same query against several engines at once. Results are deduplicated by URL, with `found_in` listing every engine
+that returned that URL, so you can rank by cross-engine consensus.
+
+### Request
 
 ```json
 {
@@ -25,14 +29,14 @@ Search the web across multiple engines simultaneously. Results are aggregated, d
 }
 ```
 
-| Field         | Required | Default                            | Description                                      |
-| ------------- | -------- | ---------------------------------- | ------------------------------------------------ |
-| `query`       | Yes      |                                    | Search query string                              |
-| `engines`     | No       | `["google", "bing", "duckduckgo"]` | Engines to query: `google`, `bing`, `duckduckgo` |
-| `max_results` | No       | `10`                               | Maximum results per engine                       |
-| `search_type` | No       | `"web"`                            | Type of search: `web`, `news`, `images`          |
+| Field | Required | Default | Description |
+|-------|----------|---------|-------------|
+| `query` | Yes | — | Search query string |
+| `engines` | No | `["google", "bing", "duckduckgo"]` | Engines to query — see [Engines](#engines) |
+| `max_results` | No | `10` | Maximum results per engine |
+| `search_type` | No | `"web"` | One of `web`, `news`, `images`, `academic` |
 
-**Response:**
+### Response
 
 ```json
 {
@@ -56,19 +60,38 @@ Search the web across multiple engines simultaneously. Results are aggregated, d
 }
 ```
 
-### POST `/search/fetch`
+#### Result fields
 
-Fetch a URL and return its cleaned readable text content.
+| Field | Always present | Description |
+|-------|----------------|-------------|
+| `title`, `url`, `snippet` | Yes | Standard result fields |
+| `engine` | Yes | The engine whose ranking is reflected in `rank` |
+| `rank` | Yes | Position in the original engine's results (1-indexed) |
+| `found_in` | Yes | Engines that returned this URL — use it for consensus scoring |
+| `search_type` | Yes | Echoes the request's `search_type` |
+| `published_at`, `source` | `news` results | Publication date and news source name |
+| `thumbnail_url`, `image_url`, `width`, `height` | `images` results | Image-specific metadata |
 
-**Request:**
+#### Meta fields
+
+| Field | Description |
+|-------|-------------|
+| `duration_ms` | Total wall-clock time |
+| `engines_used` | Engines that returned at least one result |
+| `engines_failed` | Engines that errored or timed out |
+| `engine_errors` | `[{"engine": "...", "reason": "..."}]` — per-engine failure details |
+
+## `POST /search/fetch`
+
+Fetch a URL and return its readable text — useful for grounding LLM responses without writing your own scraper.
+
+### Request
 
 ```json
-{
-  "url": "https://example.com/article"
-}
+{ "url": "https://example.com/article" }
 ```
 
-**Response:**
+### Response
 
 ```json
 {
@@ -79,11 +102,13 @@ Fetch a URL and return its cleaned readable text content.
 }
 ```
 
+## Examples
+
 :::tabs
 
 == Shell
 ```sh
-# Web Search
+# Web search
 curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -93,7 +118,7 @@ curl -X POST https://api.libertai.io/search \
     "max_results": 10
   }'
 
-# News Search
+# News search
 curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -104,7 +129,7 @@ curl -X POST https://api.libertai.io/search \
     "max_results": 5
   }'
 
-# Image Search
+# Image search
 curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
@@ -115,210 +140,147 @@ curl -X POST https://api.libertai.io/search \
     "max_results": 5
   }'
 
-# Fetch URL Content
-curl -X POST https://api.libertai.io/search/fetch \
+# Academic search
+curl -X POST https://api.libertai.io/search \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "url": "https://doc.rust-lang.org/book/"
+    "query": "transformer architecture",
+    "engines": ["semantic_scholar"],
+    "search_type": "academic"
   }'
+
+# Fetch URL content
+curl -X POST https://api.libertai.io/search/fetch \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -d '{ "url": "https://doc.rust-lang.org/book/" }'
 ```
 
 == Python
 ```python
 import requests
 
-# Web Search
+BASE = "https://api.libertai.io"
+HEADERS = {
+    "Authorization": "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+}
+
+# Web search
 response = requests.post(
-    "https://api.libertai.io/search",
-    headers={
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    },
+    f"{BASE}/search",
+    headers=HEADERS,
     json={
         "query": "rust programming language",
         "engines": ["google", "bing", "duckduckgo"],
-        "max_results": 10
-    }
+        "max_results": 10,
+    },
 )
+data = response.json()
 
-results = response.json()
-for result in results["results"]:
-    print(f"{result['title']} - {result['url']}")
-    print(f"Found in: {result['found_in']}")
-    print()
+for result in data["results"]:
+    consensus = len(result["found_in"])
+    print(f"[{consensus}x] {result['title']} — {result['url']}")
 
-# News Search
-news_response = requests.post(
-    "https://api.libertai.io/search",
-    headers={"Authorization": "Bearer YOUR_API_KEY"},
-    json={
-        "query": "artificial intelligence",
-        "engines": ["google", "bing"],
-        "search_type": "news"
-    }
-)
+# Fetch a page
+content = requests.post(
+    f"{BASE}/search/fetch",
+    headers=HEADERS,
+    json={"url": "https://doc.rust-lang.org/book/"},
+).json()
 
-# Fetch content
-fetch_response = requests.post(
-    "https://api.libertai.io/search/fetch",
-    headers={"Authorization": "Bearer YOUR_API_KEY"},
-    json={"url": "https://doc.rust-lang.org/book/"}
-)
-
-content = fetch_response.json()
-print(f"Title: {content['title']}")
-print(f"Word count: {content['word_count']}")
+print(f"{content['title']} ({content['word_count']} words)")
 ```
 
 == TypeScript
 ```ts
-import fetch from 'node-fetch';
+const BASE = "https://api.libertai.io";
+const HEADERS = {
+  Authorization: "Bearer YOUR_API_KEY",
+  "Content-Type": "application/json",
+};
 
-// Web Search
-const response = await fetch('https://api.libertai.io/search', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  },
+// Web search
+const response = await fetch(`${BASE}/search`, {
+  method: "POST",
+  headers: HEADERS,
   body: JSON.stringify({
-    query: 'rust programming language',
-    engines: ['google', 'bing'],
-    max_results: 10
-  })
+    query: "rust programming language",
+    engines: ["google", "bing"],
+    max_results: 10,
+  }),
 });
-
 const data = await response.json();
+
 for (const result of data.results) {
-  console.log(`${result.title} - ${result.url}`);
-  console.log(`Found in engines: ${result.found_in.join(', ')}`);
+  const consensus = result.found_in.length;
+  console.log(`[${consensus}x] ${result.title} — ${result.url}`);
 }
 
-// News Search
-const newsResponse = await fetch('https://api.libertai.io/search', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    query: 'artificial intelligence',
-    engines: ['google', 'bing'],
-    search_type: 'news'
-  })
-});
+// Fetch a page
+const content = await fetch(`${BASE}/search/fetch`, {
+  method: "POST",
+  headers: HEADERS,
+  body: JSON.stringify({ url: "https://doc.rust-lang.org/book/" }),
+}).then(r => r.json());
 
-// Fetch content
-const fetchResponse = await fetch('https://api.libertai.io/search/fetch', {
-  method: 'POST',
-  headers: {
-    'Authorization': 'Bearer YOUR_API_KEY',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    url: 'https://doc.rust-lang.org/book/'
-  })
-});
-
-const content = await fetchResponse.json();
-console.log(content.content);
+console.log(`${content.title} (${content.word_count} words)`);
 ```
 
 :::
 
-## Advanced Examples
+## Engines
 
-### Cross-Engine Consensus Scoring
+Pick `engines` based on what `search_type` you want. Not every engine supports every type:
 
-Results appearing in multiple engines are ranked higher. Use the `found_in` array to implement custom scoring:
+| Engine | `web` | `news` | `images` | `academic` |
+|--------|:-----:|:------:|:--------:|:----------:|
+| `google` | ✅ | ✅ | ✅ | — |
+| `bing` | ✅ | ✅ | ✅ | — |
+| `duckduckgo` | ✅ | — | — | — |
+| `brave` | ✅ | — | — | — |
+| `semantic_scholar` | — | — | — | ✅ |
+
+If you ask an engine for a `search_type` it doesn't support, that engine reports an error in `engine_errors` and the
+other engines still return results. See [Timeouts & partial results](#timeouts-partial-results).
+
+For pricing per engine, see the [Available providers table](./index.md#available-models). You're only billed for
+engines that successfully returned results.
+
+## Timeouts & partial results
+
+- Each engine is queried in parallel with a **10-second timeout**.
+- Engines that succeed return results; engines that fail or time out are listed in `meta.engines_failed`, with
+  reasons in `meta.engine_errors`.
+- HTTP `503` is returned only when **every** requested engine fails.
+- Use `meta.engines_used` to know which engines actually contributed to a given response.
 
 ```python
-import requests
-
 response = requests.post(
-    "https://api.libertai.io/search",
-    json={"query": "rust programming", "engines": ["google", "bing", "duckduckgo"]}
+    f"{BASE}/search",
+    headers=HEADERS,
+    json={"query": "test", "engines": ["google", "bing"]},
+    timeout=30,
 )
 
-for result in response.json()["results"]:
-    # Higher score for results found in multiple engines
-    consensus_score = len(result["found_in"])
-    print(f"{consensus_score}/3 engines: {result['title']}")
+if response.status_code == 503:
+    print("All engines failed")
+else:
+    data = response.json()
+    print(f"Used:   {data['meta']['engines_used']}")
+    print(f"Failed: {data['meta']['engines_failed']}")
+    for err in data["meta"]["engine_errors"]:
+        print(f"  {err['engine']}: {err['reason']}")
 ```
 
-### Error Handling
+## Consensus scoring
 
-The API returns partial results when some engines fail:
+Results returned by multiple engines are stronger signals. Rank or filter on `found_in`:
 
 ```python
-import requests
-from requests.exceptions import RequestException
-
-try:
-    response = requests.post(
-        "https://api.libertai.io/search",
-        json={"query": "test", "engines": ["google", "bing"]},
-        timeout=30
-    )
-
-    if response.status_code == 503:
-        print("All engines failed")
-    else:
-        data = response.json()
-        print(f"Engines used: {data['meta']['engines_used']}")
-        print(f"Engines failed: {data['meta']['engines_failed']}")
-
-except RequestException as e:
-    print(f"Request failed: {e}")
+for result in response.json()["results"]:
+    consensus = len(result["found_in"])
+    if consensus >= 2:
+        print(f"{consensus} engines agree: {result['title']}")
 ```
-
-### Image Search with Metadata
-
-```javascript
-const response = await fetch('https://api.libertai.io/search', {
-  method: 'POST',
-  headers: { 'Authorization': 'Bearer YOUR_API_KEY' },
-  body: JSON.stringify({
-    query: 'rust programming logo',
-    engines: ['google'],
-    search_type: 'images',
-    max_results: 5
-  })
-});
-
-const data = await response.json();
-for (const result of data.results) {
-  console.log({
-    title: result.title,
-    thumbnail: result.thumbnail_url,
-    fullSize: result.image_url,
-    dimensions: `${result.width}x${result.height}`
-  });
-}
-```
-
-## Rate Limits
-
-- **Timeout:** 10 seconds per engine (engines queried in parallel)
-- **Partial results:** If some engines succeed and others fail, you receive results from successful engines
-- **Error details:** Check `meta.engine_errors` for per-engine failure reasons
-
-## Supported Search Types
-
-| Search Type | Google | Bing | DuckDuckGo |
-| ----------- | ------ | ---- | ---------- |
-| `web`       | Yes    | Yes  | Yes        |
-| `news`      | Yes    | Yes  | No         |
-| `images`    | Yes    | Yes  | No         |
-
-### Response Fields by Search Type
-
-| Field           | Present for | Description            |
-| --------------- | ----------- | ---------------------- |
-| `thumbnail_url` | `images`    | Thumbnail image URL    |
-| `image_url`     | `images`    | Full-size image URL    |
-| `width`         | `images`    | Image width in pixels  |
-| `height`        | `images`    | Image height in pixels |
-| `published_at`  | `news`      | Publication date       |
-| `source`        | `news`      | News source name       |

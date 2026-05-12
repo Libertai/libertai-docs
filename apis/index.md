@@ -10,6 +10,6 @@ These are the APIs currently available:
 
 - [Text Generation API](text/index.md)
 - [Image Generation API](image/index.md)
-- [Web Search API](search/index.md)
+- [Web Search](search/index.md)
 
 You can also pay per request with crypto using [x402 payments](x402.md) instead of an API key.

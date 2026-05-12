@@ -1,8 +1,13 @@
 # Web Search
 
-LibertAI offers web search across multiple providers with competitive pricing, with results aggregated and de-duplicated across engines.
+LibertAI provides a privacy-preserving web search API that queries multiple engines in parallel, deduplicates results by
+URL, and re-ranks them by cross-engine consensus. It also exposes a `fetch` endpoint that returns the cleaned readable
+text of a page — useful for grounding LLM responses.
 
-You can find usage examples in various languages [here](./usage.md).
+Search is billed per query, per engine — only successful engines are charged. See [Usage](./usage.md) for endpoints,
+parameters, and examples in multiple languages.
+
+You can also use it through [LiberClaw.ai](https://liberclaw.ai), the LibertAI search frontend.
 
 <script setup>
 import { ref, onMounted } from 'vue'
