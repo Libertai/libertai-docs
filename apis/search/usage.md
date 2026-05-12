@@ -77,7 +77,7 @@ that returned that URL, so you can rank by cross-engine consensus.
 | Field | Description |
 |-------|-------------|
 | `duration_ms` | Total wall-clock time |
-| `engines_used` | Engines that returned at least one result |
+| `engines_used` | Engines whose worker call succeeded (may have returned zero results) |
 | `engines_failed` | Engines that errored or timed out |
 | `engine_errors` | `[{"engine": "...", "reason": "..."}]` — per-engine failure details |
 
@@ -240,13 +240,13 @@ Pick `engines` based on what `search_type` you want. Not every engine supports e
 | `bing` | ✅ | ✅ | ✅ | — |
 | `duckduckgo` | ✅ | — | — | — |
 | `brave` | ✅ | — | — | — |
-| `semantic_scholar` | — | — | — | ✅ |
+| `semantic_scholar` | ✅ | — | — | ✅ |
 
 If you ask an engine for a `search_type` it doesn't support, that engine reports an error in `engine_errors` and the
 other engines still return results. See [Timeouts & partial results](#timeouts-partial-results).
 
 For pricing per engine, see the [Available providers table](./index.md#available-models). You're only billed for
-engines that successfully returned results.
+engines whose worker call succeeded — failed/timed-out engines aren't charged.
 
 ## Timeouts & partial results
 
