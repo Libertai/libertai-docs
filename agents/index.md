@@ -1,7 +1,20 @@
 # AI Agents
 
-Build autonomous agents that pay for their own compute and inference — no API keys, no billing dashboards.\
-Your agent holds a wallet, calls LibertAI models via [x402](/apis/x402), and manages its own [Aleph Cloud](https://aleph.cloud) credits to stay alive.
+Build autonomous agents that pay for their own compute and inference — no API keys, no billing dashboards. Your agent
+holds a wallet, calls LibertAI models via [x402](/apis/x402), and manages its own
+[Aleph Cloud](https://aleph.cloud) credits to stay alive.
+
+## When to use this
+
+The LibertAI agent stack is a thin layer over Coinbase AgentKit, not a full framework. Pick it when you want:
+
+- **Wallet-funded inference** — the agent pays per call in USDC, no one issues it an API key.
+- **Onchain interaction** — you need a wallet, tool calling, and EVM action primitives in one bundle.
+- **Self-hosted runtime** — you ship a Docker image to your own Aleph VM with one command.
+
+If you mainly want orchestration (memory, planning, tracing) on top of an OpenAI-compatible endpoint, a framework like
+LangGraph or CrewAI pointed at `https://api.libertai.io/v1` with a regular API key is a simpler path. See
+[Quickstart](/quickstart). The two approaches compose — you can run a LangGraph agent inside a wallet-funded loop.
 
 ## How it works
 
@@ -21,4 +34,12 @@ Your agent holds a wallet, calls LibertAI models via [x402](/apis/x402), and man
 
 ## Get started
 
-Follow the [Getting started](./getting-started) guide to create your first autonomous agent, then [deploy it](./deployment) to Aleph Cloud with a single command.
+1. [Getting started](./getting-started) — build the agent locally (TypeScript and Python parity)
+2. [Deployment](./deployment) — push it to an Aleph Cloud VM with one command
+
+## See also
+
+- [x402 payments](/apis/x402) — payment protocol the wallet uses
+- [Text API](/apis/text/) — models with function-calling support
+- [Architecture](/architecture) — what happens after the agent calls the API
+- [GitHub source](https://github.com/Libertai/libertai-agents)
