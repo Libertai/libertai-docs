@@ -171,8 +171,8 @@ The CLI doesn't ship a `logs` subcommand yet. To inspect or tail logs:
 ssh root@<instance-ipv6>
 
 # Once inside:
-docker compose -f /opt/agent/docker-compose.yml logs -f
-docker compose -f /opt/agent/docker-compose.yml ps
+docker compose -f /opt/libertai-agentkit/docker-compose.yml logs -f
+docker compose -f /opt/libertai-agentkit/docker-compose.yml ps
 ```
 
 The SSH key used is the one auto-detected during deploy (or passed via `--ssh-key`).

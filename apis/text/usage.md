@@ -473,12 +473,10 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 | Status | Meaning | What to do |
 |--------|---------|------------|
-| `400` | Malformed request body | Fix the request shape; check JSON syntax and required fields |
 | `401` | Missing or invalid API key | Verify your key in the [Console](https://console.libertai.io) or via `/libertai/auth/check` |
 | `402` | Payment required (x402 flow) | Sign and resubmit with `X-PAYMENT` — see [x402](/apis/x402) |
 | `404` | Unknown model | Pull the list from `/v1/models` or `/libertai/models` |
 | `422` | Validation error | Check field types and enum values |
-| `429` | Too many requests | Back off and retry; reduce concurrency |
 | `503` | All servers failed for this model | Retry shortly — the gateway tried every CRN and none responded |
 
 Errors return JSON of the form `{"detail": "..."}`. Streaming responses can fail mid-stream — handle `error` events
