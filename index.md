@@ -16,13 +16,15 @@ hero:
       link: /agents/
   image:
     src: /assets/home.png
-    alt: VitePress
+    alt: LibertAI
 
 
 features:
   - title: Private by Design
     icon: 🔒
-    details: Models run in Trusted Execution Environments — no one, not even us, can see your data. No logs, no training on your conversations.
+    details: Optional Trusted Execution Environments isolate inference from operators — no logs, no training on your conversations.
+    link: /concepts/trust-model
+    linkText: How privacy works
   - title: Text & Vision APIs
     icon: 💬
     details: OpenAI-compatible API with open-source LLMs. Function calling, vision, reasoning — swap your base URL and go.
@@ -41,7 +43,7 @@ features:
   - title: AI Agents
     icon: 🤖
     details: Build autonomous agents that pay for their own compute and inference with x402, powered by Aleph Cloud and LibertAI.
-    link: /agents
+    link: /agents/
     linkText: Learn more
   - title: Decentralized
     icon: ⛓️
