@@ -110,15 +110,15 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
         <tbody>
           <tr v-for="m in models" :key="m.id">
             <td>{{ m.name }}</td>
-            <template v-if="category === 'text' && m.pricing.text">
-              <td>${{ m.pricing.text.price_per_million_input_tokens.toFixed(2) }} / 1M tokens</td>
-              <td>${{ m.pricing.text.price_per_million_output_tokens.toFixed(2) }} / 1M tokens</td>
+            <template v-if="category === 'text'">
+              <td>{{ m.pricing.text ? `$${m.pricing.text.price_per_million_input_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
+              <td>{{ m.pricing.text ? `$${m.pricing.text.price_per_million_output_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
             </template>
-            <template v-else-if="category === 'image' && m.pricing.image != null">
-              <td>${{ m.pricing.image.toFixed(4) }}</td>
+            <template v-else-if="category === 'image'">
+              <td>{{ m.pricing.image != null ? `$${m.pricing.image.toFixed(4)}` : '—' }}</td>
             </template>
-            <template v-else-if="category === 'search' && m.pricing.search != null">
-              <td>${{ m.pricing.search.toFixed(4) }}</td>
+            <template v-else>
+              <td>{{ m.pricing.search != null ? `$${m.pricing.search.toFixed(4)}` : '—' }}</td>
             </template>
           </tr>
         </tbody>
