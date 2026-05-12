@@ -40,6 +40,13 @@ export default defineConfig({
                 ],
             },
             {
+                text: 'Concepts',
+                collapsed: false,
+                items: [
+                    {text: 'Trust model & TEE', link: '/concepts/trust-model'},
+                ],
+            },
+            {
                 text: "APIs",
                 collapsed: false,
                 link: "/apis/",
