@@ -6,14 +6,14 @@ hero:
   tagline: Private AI Secured by Blockchain
   actions:
     - theme: brand
+      text: Get started
+      link: /quickstart
+    - theme: alt
       text: What is LibertAI?
       link: /what-is-libertai
     - theme: alt
       text: APIs
       link: /apis/
-    - theme: alt
-      text: Agents
-      link: /agents/
   image:
     src: /assets/home.png
     alt: LibertAI

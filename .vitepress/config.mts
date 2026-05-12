@@ -35,7 +35,8 @@ export default defineConfig({
                 collapsed: false,
                 items: [
                     {text: 'What is LibertAI?', link: '/what-is-libertai'},
-                    {text: 'Architecture', link: '/architecture'}
+                    {text: 'Quickstart', link: '/quickstart'},
+                    {text: 'Architecture', link: '/architecture'},
                 ],
             },
             {
