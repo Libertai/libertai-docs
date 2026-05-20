@@ -7,12 +7,26 @@ through a single corporate gateway.
 
 ## What you can build with it
 
-| | |
-|---|---|
-| **Chat & reasoning** | Talk to open-source LLMs (Qwen, Gemma, DeepSeek, Hermes) via OpenAI or Anthropic SDKs — function calling, vision, and reasoning included. → [Text API](/apis/text/) |
-| **Image generation** | Stable Diffusion WebUI and OpenAI-compatible image endpoints. → [Image API](/apis/image/) |
-| **Web search & retrieval** | Multi-engine search (Google, Bing, DuckDuckGo, Brave, Semantic Scholar) with consensus ranking, plus a URL-fetch endpoint for RAG. → [Search API](/apis/search/) |
-| **Autonomous agents** | Build agents that pay for their own inference and compute with crypto — no API key, no billing dashboard. → [Agents](/agents/) |
+<table>
+  <tbody>
+    <tr>
+      <td><strong>Chat & reasoning</strong></td>
+      <td>Talk to open-source LLMs (Qwen, Gemma, DeepSeek, Hermes) via OpenAI or Anthropic SDKs — function calling, vision, and reasoning included. → <a href="/apis/text/">Text API</a></td>
+    </tr>
+    <tr>
+      <td><strong>Image generation</strong></td>
+      <td>Stable Diffusion WebUI and OpenAI-compatible image endpoints. → <a href="/apis/image/">Image API</a></td>
+    </tr>
+    <tr>
+      <td><strong>Web search & retrieval</strong></td>
+      <td>Multi-engine search (Google, Bing, DuckDuckGo, Brave, Semantic Scholar) with consensus ranking, plus a URL-fetch endpoint for RAG. → <a href="/apis/search/">Search API</a></td>
+    </tr>
+    <tr>
+      <td><strong>Autonomous agents</strong></td>
+      <td>Build agents that pay for their own inference and compute with crypto — no API key, no billing dashboard. → <a href="/agents/">Agents</a></td>
+    </tr>
+  </tbody>
+</table>
 
 You can also use LibertAI through the [chat interface](https://chat.libertai.io) or
 [LiberClaw](https://liberclaw.ai), our sovereign assistant frontend.
