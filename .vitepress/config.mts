@@ -82,6 +82,15 @@ export default defineConfig({
                         ]
                     },
                     {
+                        text: "Embeddings",
+                        link: "/apis/embeddings/",
+                        items: [
+                            {text: "Available models", link: "/apis/embeddings/#available-models"},
+                            {text: "Pricing", link: "/apis/embeddings/#pricing"},
+                            {text: "Usage", link: "/apis/embeddings/usage"},
+                        ]
+                    },
+                    {
                         text: "Search",
                         link: "/apis/search/",
                         items: [

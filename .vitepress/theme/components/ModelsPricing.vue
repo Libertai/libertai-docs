@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { z } from 'zod'
 
 const props = defineProps<{
-  category: 'text' | 'image' | 'search'
+  category: 'text' | 'image' | 'search' | 'embedding'
 }>()
 
 const TextCapsSchema = z.object({
@@ -14,6 +14,11 @@ const TextCapsSchema = z.object({
   vision: z.boolean(),
 }).optional()
 
+const EmbeddingCapsSchema = z.object({
+  context_window: z.number(),
+  dimensions: z.number(),
+}).optional()
+
 const ModelSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -22,6 +27,7 @@ const ModelSchema = z.object({
     text: TextCapsSchema,
     image: z.boolean().optional(),
     search: z.boolean().optional(),
+    embedding: EmbeddingCapsSchema,
   }),
   pricing: z.object({
     text: z.object({
@@ -30,6 +36,9 @@ const ModelSchema = z.object({
     }).optional(),
     image: z.number().optional(),
     search: z.number().optional(),
+    embedding: z.object({
+      price_per_million_input_tokens: z.number(),
+    }).optional(),
   }),
 })
 
@@ -92,6 +101,10 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
           <span v-if="m.capabilities.text.reasoning" class="mp-cap" title="Reasoning supported">🧠 reasoning</span>
           <span v-if="m.capabilities.text.tee" class="mp-cap" title="Running in a Trusted Execution Environment">🔒 TEE</span>
         </div>
+        <div v-else-if="m.capabilities.embedding" class="mp-caps">
+          <span class="mp-ctx">{{ m.capabilities.embedding.context_window.toLocaleString() }} context window</span>
+          <span class="mp-cap" title="Embedding vector dimensions">📐 {{ m.capabilities.embedding.dimensions }} dimensions</span>
+        </div>
       </div>
     </div>
 
@@ -103,6 +116,9 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
         </thead>
         <thead v-else-if="category === 'image'">
           <tr><th>Model</th><th>Price per image</th></tr>
+        </thead>
+        <thead v-else-if="category === 'embedding'">
+          <tr><th>Model</th><th>Price per 1M input tokens</th></tr>
         </thead>
         <thead v-else>
           <tr><th>Engine</th><th>Price per query</th></tr>
@@ -116,6 +132,9 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
             </template>
             <template v-else-if="category === 'image'">
               <td>{{ m.pricing.image != null ? `$${m.pricing.image.toFixed(4)}` : '—' }}</td>
+            </template>
+            <template v-else-if="category === 'embedding'">
+              <td>{{ m.pricing.embedding != null ? `$${m.pricing.embedding.price_per_million_input_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
             </template>
             <template v-else>
               <td>{{ m.pricing.search != null ? `$${m.pricing.search.toFixed(4)}` : '—' }}</td>
