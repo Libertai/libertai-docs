@@ -3,7 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import { z } from 'zod'
 
 const props = defineProps<{
-  category: 'text' | 'image' | 'search' | 'embedding'
+  category: 'text' | 'image' | 'search' | 'embedding' | 'audio'
 }>()
 
 const TextCapsSchema = z.object({
@@ -19,6 +19,11 @@ const EmbeddingCapsSchema = z.object({
   dimensions: z.number(),
 }).optional()
 
+const AudioCapsSchema = z.object({
+  languages: z.array(z.string()),
+  voices: z.array(z.string()),
+}).optional()
+
 const ModelSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -28,6 +33,7 @@ const ModelSchema = z.object({
     image: z.boolean().optional(),
     search: z.boolean().optional(),
     embedding: EmbeddingCapsSchema,
+    audio: AudioCapsSchema,
   }),
   pricing: z.object({
     text: z.object({
@@ -38,6 +44,9 @@ const ModelSchema = z.object({
     search: z.number().optional(),
     embedding: z.object({
       price_per_million_input_tokens: z.number(),
+    }).optional(),
+    audio: z.object({
+      price_per_million_input_characters: z.number(),
     }).optional(),
   }),
 })
@@ -105,6 +114,10 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
           <span class="mp-ctx">{{ m.capabilities.embedding.context_window.toLocaleString() }} context window</span>
           <span class="mp-cap" title="Embedding vector dimensions">📐 {{ m.capabilities.embedding.dimensions }} dimensions</span>
         </div>
+        <div v-else-if="m.capabilities.audio" class="mp-caps">
+          <span class="mp-ctx">{{ m.capabilities.audio.languages.length }} languages</span>
+          <span class="mp-cap" title="Built-in voices">🗣️ {{ m.capabilities.audio.voices.length }} voices</span>
+        </div>
       </div>
     </div>
 
@@ -119,6 +132,9 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
         </thead>
         <thead v-else-if="category === 'embedding'">
           <tr><th>Model</th><th>Price per 1M input tokens</th></tr>
+        </thead>
+        <thead v-else-if="category === 'audio'">
+          <tr><th>Model</th><th>Price per 1M input characters</th></tr>
         </thead>
         <thead v-else>
           <tr><th>Engine</th><th>Price per query</th></tr>
@@ -135,6 +151,9 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
             </template>
             <template v-else-if="category === 'embedding'">
               <td>{{ m.pricing.embedding != null ? `$${m.pricing.embedding.price_per_million_input_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
+            </template>
+            <template v-else-if="category === 'audio'">
+              <td>{{ m.pricing.audio != null ? `$${m.pricing.audio.price_per_million_input_characters.toFixed(2)} / 1M characters` : '—' }}</td>
             </template>
             <template v-else>
               <td>{{ m.pricing.search != null ? `$${m.pricing.search.toFixed(4)}` : '—' }}</td>

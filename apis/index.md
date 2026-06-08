@@ -1,6 +1,6 @@
 # APIs
 
-LibertAI exposes OpenAI- and Anthropic-compatible APIs for text, image, embeddings, and web search. Each API is
+LibertAI exposes OpenAI- and Anthropic-compatible APIs for text, image, embeddings, audio, and web search. Each API is
 documented with its own models, pricing, and usage examples.
 
 | API | What it does | OpenAI-compat | x402-eligible |
@@ -8,6 +8,7 @@ documented with its own models, pricing, and usage examples.
 | [Text](text/index.md) | Chat completions, completions, Anthropic Messages, function calling, vision, streaming | ✅ | ✅ |
 | [Image](image/index.md) | Stable Diffusion WebUI and OpenAI images endpoints | ✅ | ✅ |
 | [Embeddings](embeddings/index.md) | Text embeddings for semantic search, RAG, clustering | ✅ | ✅ |
+| [Audio](audio/index.md) | Text-to-speech (TTS) with selectable voices | ✅ | ✅ |
 | [Search](search/index.md) | Multi-engine search + URL fetch for RAG | — | ✅ |
 
 ## Authentication
