@@ -91,6 +91,15 @@ export default defineConfig({
                         ]
                     },
                     {
+                        text: "Audio",
+                        link: "/apis/audio/",
+                        items: [
+                            {text: "Available models", link: "/apis/audio/#available-models"},
+                            {text: "Pricing", link: "/apis/audio/#pricing"},
+                            {text: "Usage", link: "/apis/audio/usage"},
+                        ]
+                    },
+                    {
                         text: "Search",
                         link: "/apis/search/",
                         items: [
