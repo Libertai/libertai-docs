@@ -19,7 +19,7 @@ curl -X POST https://api.libertai.io/v1/audio/speech \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "kokoro",
+    "model": "kokoro-82m",
     "input": "Hello from LibertAI.",
     "voice": "af_heart",
     "response_format": "wav"
@@ -36,7 +36,7 @@ client = OpenAI(
 )
 
 response = client.audio.speech.create(
-    model="kokoro",
+    model="kokoro-82m",
     input="Hello from LibertAI.",
     voice="af_heart",
     response_format="wav",
@@ -55,7 +55,7 @@ const client = new OpenAI({
 });
 
 const response = await client.audio.speech.create({
-  model: "kokoro",
+  model: "kokoro-82m",
   input: "Hello from LibertAI.",
   voice: "af_heart",
   response_format: "wav",
@@ -70,7 +70,7 @@ fs.writeFileSync("speech.wav", Buffer.from(await response.arrayBuffer()));
 
 | Field | Required | Notes |
 |-------|:--------:|-------|
-| `model` | ✅ | e.g. `kokoro` |
+| `model` | ✅ | e.g. `kokoro-82m` |
 | `input` | ✅ | Text to synthesize (max 8192 characters) |
 | `voice` | — | Raw model voice ID; defaults to the model's default voice (`af_heart` for Kokoro) |
 | `response_format` | — | `wav` only (default) in the current release |
