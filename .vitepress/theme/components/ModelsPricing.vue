@@ -115,8 +115,8 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
           <span class="mp-cap" title="Embedding vector dimensions">📐 {{ m.capabilities.embedding.dimensions }} dimensions</span>
         </div>
         <div v-else-if="m.capabilities.audio" class="mp-caps">
-          <span class="mp-ctx">{{ m.capabilities.audio.languages.length }} languages</span>
-          <span class="mp-cap" title="Built-in voices">🗣️ {{ m.capabilities.audio.voices.length }} voices</span>
+          <span class="mp-ctx" :title="m.capabilities.audio.languages.join(', ')">{{ m.capabilities.audio.languages.length }} language{{ m.capabilities.audio.languages.length === 1 ? '' : 's' }}</span>
+          <span class="mp-cap" :title="`Built-in voices: ${m.capabilities.audio.voices.join(', ')}`">🗣️ {{ m.capabilities.audio.voices.length }} voices</span>
         </div>
       </div>
     </div>
