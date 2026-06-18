@@ -39,6 +39,7 @@ const ModelSchema = z.object({
     text: z.object({
       price_per_million_input_tokens: z.number(),
       price_per_million_output_tokens: z.number(),
+      price_per_million_cached_input_tokens: z.number().optional(),
     }).optional(),
     image: z.number().optional(),
     search: z.number().optional(),
@@ -125,7 +126,7 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
     <div class="mp-table-wrap">
       <table class="mp-table">
         <thead v-if="category === 'text'">
-          <tr><th>Model</th><th>Input</th><th>Output</th></tr>
+          <tr><th>Model</th><th>Input</th><th>Cached input</th><th>Output</th></tr>
         </thead>
         <thead v-else-if="category === 'image'">
           <tr><th>Model</th><th>Price per image</th></tr>
@@ -144,6 +145,7 @@ const noModels = computed(() => !loading.value && !error.value && models.value.l
             <td>{{ m.name }}</td>
             <template v-if="category === 'text'">
               <td>{{ m.pricing.text ? `$${m.pricing.text.price_per_million_input_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
+              <td>{{ m.pricing.text?.price_per_million_cached_input_tokens != null ? `$${m.pricing.text.price_per_million_cached_input_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
               <td>{{ m.pricing.text ? `$${m.pricing.text.price_per_million_output_tokens.toFixed(2)} / 1M tokens` : '—' }}</td>
             </template>
             <template v-else-if="category === 'image'">
