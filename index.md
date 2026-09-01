@@ -3,11 +3,14 @@ layout: home
 
 hero:
   name: LibertAI
-  tagline: Private AI Secured by Blockchain
+  tagline: Private, open-weights AI inference. No lock-in.
   actions:
     - theme: brand
       text: Get started
       link: /quickstart
+    - theme: alt
+      text: Use in your tools
+      link: /integrations/
     - theme: alt
       text: What is LibertAI?
       link: /what-is-libertai
@@ -46,7 +49,7 @@ features:
     link: /agents/
     linkText: Learn more
   - title: Decentralized
-    icon: ⛓️
+    icon: 🌐
     details: Runs on Aleph Cloud’s distributed compute network. No single point of failure, no corporate gatekeepers.
 ---
 

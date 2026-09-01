@@ -115,6 +115,20 @@ export default defineConfig({
                 ]
             },
             {
+                text: "Use LibertAI in your tools",
+                collapsed: false,
+                link: "/integrations/",
+                items: [
+                    {text: "Cline", link: "/integrations/cline"},
+                    {text: "Roo Code", link: "/integrations/roo-code"},
+                    {text: "Continue", link: "/integrations/continue"},
+                    {text: "OpenCode", link: "/integrations/opencode"},
+                    {text: "Aider", link: "/integrations/aider"},
+                    {text: "Claude Code", link: "/integrations/claude-code"},
+                    {text: "LangChain & LlamaIndex", link: "/integrations/langchain"},
+                ]
+            },
+            {
                 text: "Agents",
                 collapsed: false,
                 link: "/agents/",

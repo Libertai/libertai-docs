@@ -93,6 +93,7 @@ The `/v1/messages` endpoint accepts the Anthropic Messages format directly.
 
 ## Next steps
 
+- [Use LibertAI in your tools](/integrations/) — Cline, Roo Code, Continue, OpenCode, Aider, Claude Code, LangChain
 - [Text API](/apis/text/) — list of models, pricing, context windows, capabilities
 - [Text usage](/apis/text/usage) — streaming, function calling, vision, direct CRN calls
 - [Image generation](/apis/image/) — Stable Diffusion and OpenAI-compatible endpoints
