@@ -46,16 +46,16 @@ export default defineConfig({
                 text: 'Introduction',
                 collapsed: false,
                 items: [
-                    {text: 'What is LibertAI?', link: '/what-is-libertai'},
-                    {text: 'Quickstart', link: '/quickstart'},
-                    {text: 'Architecture', link: '/architecture'},
+                    {text: 'What is LibertAI?', link: '/what-is-libertai.html'},
+                    {text: 'Quickstart', link: '/quickstart.html'},
+                    {text: 'Architecture', link: '/architecture.html'},
                 ],
             },
             {
                 text: 'Concepts',
                 collapsed: false,
                 items: [
-                    {text: 'Trust model & TEE', link: '/concepts/trust-model'},
+                    {text: 'Trust model & TEE', link: '/concepts/trust-model.html'},
                 ],
             },
             {
@@ -69,7 +69,7 @@ export default defineConfig({
                         items: [
                             {text: "Available models", link: "/apis/text/#available-models"},
                             {text: "Pricing", link: "/apis/text/#pricing"},
-                            {text: "Usage", link: "/apis/text/usage"},
+                            {text: "Usage", link: "/apis/text/usage.html"},
                         ]
                     },
                     {
@@ -87,7 +87,7 @@ export default defineConfig({
                         items: [
                             {text: "Available models", link: "/apis/embeddings/#available-models"},
                             {text: "Pricing", link: "/apis/embeddings/#pricing"},
-                            {text: "Usage", link: "/apis/embeddings/usage"},
+                            {text: "Usage", link: "/apis/embeddings/usage.html"},
                         ]
                     },
                     {
@@ -96,7 +96,7 @@ export default defineConfig({
                         items: [
                             {text: "Available models", link: "/apis/audio/#available-models"},
                             {text: "Pricing", link: "/apis/audio/#pricing"},
-                            {text: "Usage", link: "/apis/audio/usage"},
+                            {text: "Usage", link: "/apis/audio/usage.html"},
                         ]
                     },
                     {
@@ -105,12 +105,12 @@ export default defineConfig({
                         items: [
                             {text: "Available providers", link: "/apis/search/#available-models"},
                             {text: "Pricing", link: "/apis/search/#pricing"},
-                            {text: "Usage", link: "/apis/search/usage"},
+                            {text: "Usage", link: "/apis/search/usage.html"},
                         ]
                     },
                     {
                         text: "x402 payments",
-                        link: "/apis/x402",
+                        link: "/apis/x402.html",
                     },
                 ]
             },
@@ -119,13 +119,13 @@ export default defineConfig({
                 collapsed: false,
                 link: "/integrations/",
                 items: [
-                    {text: "Cline", link: "/integrations/cline"},
-                    {text: "Roo Code", link: "/integrations/roo-code"},
-                    {text: "Continue", link: "/integrations/continue"},
-                    {text: "OpenCode", link: "/integrations/opencode"},
-                    {text: "Aider", link: "/integrations/aider"},
-                    {text: "Claude Code", link: "/integrations/claude-code"},
-                    {text: "LangChain & LlamaIndex", link: "/integrations/langchain"},
+                    {text: "Cline", link: "/integrations/cline.html"},
+                    {text: "Roo Code", link: "/integrations/roo-code.html"},
+                    {text: "Continue", link: "/integrations/continue.html"},
+                    {text: "OpenCode", link: "/integrations/opencode.html"},
+                    {text: "Aider", link: "/integrations/aider.html"},
+                    {text: "Claude Code", link: "/integrations/claude-code.html"},
+                    {text: "LangChain & LlamaIndex", link: "/integrations/langchain.html"}
                 ]
             },
             {
@@ -133,8 +133,8 @@ export default defineConfig({
                 collapsed: false,
                 link: "/agents/",
                 items: [
-                    {text: "Getting started", link: "/agents/getting-started"},
-                    {text: "Deployment", link: "/agents/deployment"},
+                    {text: "Getting started", link: "/agents/getting-started.html"},
+                    {text: "Deployment", link: "/agents/deployment.html"},
                 ]
             },
         ],

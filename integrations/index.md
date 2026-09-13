@@ -22,7 +22,7 @@ your API key and a model id from the table below. That is the whole integration.
 Sign in to the [Developer console](https://console.libertai.io), create a key, and top it up. If you use the
 [LibertAI CLI](https://github.com/Libertai/libertai-cli), `libertai login` walks you through browser sign-in and
 `libertai keys create` mints keys from the terminal. You can also skip keys entirely and pay per request in USDC on
-Base with [x402 payments](/apis/x402).
+Base with [x402 payments](/apis/x402.html).
 
 Check that a key works without spending tokens:
 
@@ -53,7 +53,7 @@ with current pricing is on the [Text API page](/apis/text/#available-models), or
 
 ## See also
 
-- [Quickstart](/quickstart) — first API call in under five minutes
-- [Text usage](/apis/text/usage) — streaming, function calling, vision, direct CRN access
-- [Trust model & TEE](/concepts/trust-model) — what the 🔒 flag guarantees
-- [x402 payments](/apis/x402) — pay per request without an API key
+- [Quickstart](/quickstart.html) — first API call in under five minutes
+- [Text usage](/apis/text/usage.html) — streaming, function calling, vision, direct CRN access
+- [Trust model & TEE](/concepts/trust-model.html) — what the 🔒 flag guarantees
+- [x402 payments](/apis/x402.html) — pay per request without an API key
