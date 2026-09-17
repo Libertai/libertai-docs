@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vitepress dev .",
     "build": "vitepress build .",
+    "check:docs": "node scripts/check-docs.mjs",
     "preview": "vitepress preview ."
   },
   "author": "",

@@ -90,7 +90,7 @@ curl -X POST https://api.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "gemma-4-31b-it",
+    "model": "qwen3.6-35b-a3b",
     "messages": [
       {
         "role": "user",
@@ -118,7 +118,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="gemma-4-31b-it",
+    model="qwen3.6-35b-a3b",
     messages=[
         {
             "role": "user",
@@ -148,7 +148,7 @@ const client = new OpenAI({
 });
 
 const completion = await client.chat.completions.create({
-  model: "gemma-4-31b-it",
+  model: "qwen3.6-35b-a3b",
   messages: [
     {
       role: "user",
@@ -183,7 +183,7 @@ curl -N -X POST https://api.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "gemma-4-31b-it",
+    "model": "qwen3.6-35b-a3b",
     "stream": true,
     "messages": [
       { "role": "user", "content": "Count from 1 to 5, one number per line." }
@@ -198,7 +198,7 @@ from openai import OpenAI
 client = OpenAI(base_url="https://api.libertai.io/v1", api_key="YOUR_API_KEY")
 
 stream = client.chat.completions.create(
-    model="gemma-4-31b-it",
+    model="qwen3.6-35b-a3b",
     messages=[{"role": "user", "content": "Count from 1 to 5, one number per line."}],
     stream=True,
 )
@@ -219,7 +219,7 @@ const client = new OpenAI({
 });
 
 const stream = await client.chat.completions.create({
-  model: "gemma-4-31b-it",
+  model: "qwen3.6-35b-a3b",
   messages: [{ role: "user", content: "Count from 1 to 5, one number per line." }],
   stream: true,
 });
@@ -258,7 +258,7 @@ tools = [{
 }]
 
 resp = client.chat.completions.create(
-    model="gemma-4-31b-it",
+    model="qwen3.6-35b-a3b",
     messages=[{"role": "user", "content": "What's the weather in Paris?"}],
     tools=tools,
 )
@@ -277,7 +277,7 @@ const client = new OpenAI({
 });
 
 const resp = await client.chat.completions.create({
-  model: "gemma-4-31b-it",
+  model: "qwen3.6-35b-a3b",
   messages: [{ role: "user", content: "What's the weather in Paris?" }],
   tools: [{
     type: "function",
@@ -316,7 +316,7 @@ curl -X POST https://api.libertai.io/v1/messages \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -d '{
-    "model": "gemma-4-31b-it",
+    "model": "qwen3.6-35b-a3b",
     "max_tokens": 256,
     "messages": [
       { "role": "user", "content": "Hello!" }
@@ -334,7 +334,7 @@ client = anthropic.Anthropic(
 )
 
 msg = client.messages.create(
-    model="gemma-4-31b-it",
+    model="qwen3.6-35b-a3b",
     max_tokens=256,
     messages=[{"role": "user", "content": "Hello!"}],
 )

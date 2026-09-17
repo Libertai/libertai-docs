@@ -1,0 +1,25 @@
+{
+  "_comment": "Live model ids from GET /v1/models (2026-09-17). Used by scripts/check-docs.mjs to catch docs that reference removed models. Refresh when the lineup changes.",
+  "_source": "https://api.libertai.io/v1/models",
+  "models": [
+    "bge-m3",
+    "deepseek-v4-flash",
+    "deepseek-v4-flash-thinking",
+    "deepseek-v4.1-flash",
+    "deepseek-v4.1-flash-thinking",
+    "glm-5.3",
+    "glm-5.3-flash",
+    "glm-5.3-flash-thinking",
+    "glm-5.3-thinking",
+    "hermes-3-8b-tee",
+    "kokoro-82m",
+    "qwen3.5-122b-a10b",
+    "qwen3.5-122b-a10b-thinking",
+    "qwen3.5-4b",
+    "qwen3.6-35b-a3b",
+    "qwen3.6-35b-a3b-thinking",
+    "qwen3.8-27b",
+    "qwen3.8-27b-thinking",
+    "z-image-turbo"
+  ]
+}

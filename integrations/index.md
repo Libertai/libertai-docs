@@ -36,19 +36,20 @@ curl -i https://api.libertai.io/libertai/auth/check \
 ## Models
 
 Recommended default for coding agents: `qwen3.5-122b-a10b` (262k context, vision, tools). Budget option:
-`qwen3.6-35b-a3b`. For confidential inference in a Trusted Execution Environment: `hermes-3-8b-tee` (note the 16k
-context).
+`qwen3.6-35b-a3b`. Flagship: `glm-5.3` (`glm-5.3-flash` is the cheap, 524k-context variant). For confidential
+inference in a Trusted Execution Environment: `hermes-3-8b-tee` (note the 16k context).
 
 | Model | Input / output (per M tokens) | Context | Capabilities |
 |-------|-------------------------------|--------:|--------------|
 | `hermes-3-8b-tee` | $0.15 / $0.60 | 16k | tools, TEE 🔒 |
-| `gemma-4-31b-it` | $0.15 / $0.40 | 262k | vision, tools |
-| `qwen3.6-27b` | $0.15 / $0.50 | 262k | vision, tools |
 | `qwen3.6-35b-a3b` | $0.15 / $0.50 | 262k | vision, tools |
+| `qwen3.8-27b` | $0.15 / $0.50 | 262k | vision, tools |
+| `glm-5.3-flash` | $0.15 / $0.50 | 524k | vision, tools |
 | `qwen3.5-122b-a10b` | $0.25 / $1.75 | 262k | vision, tools |
-| `deepseek-v4-flash` | $0.25 / $1.75 | 200k | tools |
+| `deepseek-v4.1-flash` | $0.25 / $1.75 | 262k | vision, tools |
+| `glm-5.3` | $1.40 / $4.40 | 262k | tools |
 
-Thinking variants exist with a `-thinking` suffix (for example `qwen3.6-27b-thinking`). The live, authoritative list
+Thinking variants exist with a `-thinking` suffix (for example `qwen3.8-27b-thinking`). The live, authoritative list
 with current pricing is on the [Text API page](/apis/text/#available-models), or via `GET /v1/models`.
 
 ## See also

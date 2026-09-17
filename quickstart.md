@@ -18,7 +18,7 @@ curl -X POST https://api.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $LIBERTAI_API_KEY" \
   -d '{
-    "model": "gemma-4-31b-it",
+    "model": "qwen3.6-35b-a3b",
     "messages": [
       { "role": "user", "content": "In one sentence: what is decentralized inference?" }
     ]
@@ -35,7 +35,7 @@ client = OpenAI(
 )
 
 resp = client.chat.completions.create(
-    model="gemma-4-31b-it",
+    model="qwen3.6-35b-a3b",
     messages=[
         {"role": "user", "content": "In one sentence: what is decentralized inference?"}
     ],
@@ -53,7 +53,7 @@ const client = new OpenAI({
 });
 
 const resp = await client.chat.completions.create({
-  model: "gemma-4-31b-it",
+  model: "qwen3.6-35b-a3b",
   messages: [
     { role: "user", content: "In one sentence: what is decentralized inference?" },
   ],
@@ -74,7 +74,7 @@ Two lines change. Keep the rest of your code.
 - base_url="https://api.openai.com/v1"
 + base_url="https://api.libertai.io/v1"
 - model="gpt-4o-mini"
-+ model="gemma-4-31b-it"
++ model="qwen3.6-35b-a3b"
 ```
 
 The `/v1/chat/completions`, `/v1/completions`, `/v1/responses`, and `/v1/models` endpoints are all OpenAI-compatible.
@@ -86,7 +86,7 @@ The `/v1/chat/completions`, `/v1/completions`, `/v1/responses`, and `/v1/models`
 - base_url="https://api.anthropic.com"
 + base_url="https://api.libertai.io"
 - model="claude-haiku-4-5"
-+ model="gemma-4-31b-it"
++ model="qwen3.6-35b-a3b"
 ```
 
 The `/v1/messages` endpoint accepts the Anthropic Messages format directly.
