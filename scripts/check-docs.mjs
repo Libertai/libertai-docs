@@ -6,9 +6,10 @@
  *    the built site. VitePress runs with `cleanUrls` disabled (Aleph hosting), so
  *    leaf pages live at `<name>.html` while section indexes live at `<dir>/index.html`.
  *    llms.txt once pointed 11 of 15 links at 404s — this makes that impossible.
- * 2. Every model id referenced in markdown must exist in scripts/known-models.json
- *    (kept in sync with GET /v1/models), so a removed model can't linger in the
- *    quickstart.
+ * 2. Every model id referenced in markdown must still be served, checked against
+ *    GET /v1/models live, so a removed model can't linger in the quickstart. If
+ *    the API cannot be reached the check is skipped rather than failed: it exists
+ *    to catch stale docs, not to gate on someone else's uptime.
  *
  * Run after `npm run build`.
  */
@@ -57,8 +58,16 @@ for (const url of urls) {
 }
 
 // ── 2. Model ids in markdown ─────────────────────────────────────────
-const { models } = JSON.parse(readFileSync(join(root, "scripts", "known-models.json"), "utf8"));
-const known = new Set(models);
+const MODELS_URL = "https://api.libertai.io/v1/models";
+let known = null;
+try {
+	const res = await fetch(MODELS_URL, { signal: AbortSignal.timeout(20_000) });
+	if (!res.ok) throw new Error(`HTTP ${res.status}`);
+	known = new Set((await res.json()).data.map((m) => m.id));
+	console.log(`fetched ${known.size} live model ids from ${MODELS_URL}`);
+} catch (e) {
+	console.warn(`! skipping the model-id check: could not reach ${MODELS_URL} (${e.message})`);
+}
 const modelPatterns = [
 	/[["']?model["']?\s*[:=]\s*["']([^"'\s$<`]+)["']/g,
 	/ANTHROPIC_DEFAULT_(?:OPUS|SONNET|HAIKU)_MODEL=([^\s\\`]+)/g,
@@ -69,6 +78,7 @@ const externalModel = /^(gpt|claude|o[1-9]|text-|grok|gemini|mistral|llama)/i;
 for (const file of walk(root, ".md")) {
 	const lines = readFileSync(file, "utf8").split("\n");
 	for (const [i, line] of lines.entries()) {
+		if (!known) break;
 		if (line.trimStart().startsWith("-")) continue; // removed diff line
 		for (const pattern of modelPatterns) {
 			for (const match of line.matchAll(pattern)) {
@@ -76,7 +86,7 @@ for (const file of walk(root, ".md")) {
 				if (id.startsWith("$") || id.startsWith("<") || /^(YOUR|MODEL|model)/i.test(id)) continue;
 				if (externalModel.test(id)) continue;
 				if (!known.has(id)) {
-					errors.push(`${relative(root, file)}:${i + 1}: unknown model id "${id}" (not in known-models.json)`);
+					errors.push(`${relative(root, file)}:${i + 1}: model id "${id}" is not served by ${MODELS_URL}`);
 				}
 			}
 		}
