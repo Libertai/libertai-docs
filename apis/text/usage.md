@@ -24,7 +24,7 @@ curl -X POST https://api.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "hermes-3-8b-tee",
+    "model": "qwen3.6-35b-a3b",
     "messages": [
       {
         "role": "user",
@@ -44,7 +44,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="hermes-3-8b-tee",
+    model="qwen3.6-35b-a3b",
     messages=[
         {
             "role": "user",
@@ -66,7 +66,7 @@ const client = new OpenAI({
 });
 
 const completion = await client.chat.completions.create({
-    model: "hermes-3-8b-tee",
+    model: "qwen3.6-35b-a3b",
     messages: [
         {
             role: "user",
@@ -361,20 +361,25 @@ curl https://api.libertai.io/libertai/models
 
 ```json
 {
-  "hermes-3-8b-tee": {
-    "servers": ["https://hermes-3-8b-2.tee.models.libertai.io"]
-  },
-  "qwen3.6-27b": {
+  "qwen3.8-27b": {
     "servers": [
-      "https://qwen3-5-27b-1.models.libertai.io",
-      "https://qwen3-5-27b-2.models.libertai.io"
+      "https://qwen-3-8-27b-1.models.libertai.io",
+      "https://qwen3-5-27b-1.models.libertai.io"
     ]
+  },
+  "qwen3.8-27b-tee": {
+    "servers": ["tee://a41744d4be9ac87b729608d3f22e35aa53081513de7d58a974c1a874d2e7b560"]
   },
   "z-image-turbo": {
     "servers": ["https://z-image-turbo-1.models.libertai.io"]
   }
 }
 ```
+
+A `tee://` entry is not an address: it is the Aleph item hash of a confidential
+deployment, whose address is discovered and then attested. Reaching one directly
+means using a verifying client — see
+[Confidential models](#confidential-models) below.
 
 Each entry maps a model `id` (the same one you'd pass to `/v1/chat/completions`) to one or more server URLs.
 This endpoint covers every model exposed by LibertAI — text, image, etc. — so it's the same discovery path for any
@@ -390,11 +395,11 @@ exactly the same way:
 
 == Shell
 ```sh
-curl -X POST https://hermes-3-8b-2.tee.models.libertai.io/v1/chat/completions \
+curl -X POST https://qwen-3-8-27b-1.models.libertai.io/v1/chat/completions \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -d '{
-    "model": "hermes-3-8b-tee",
+    "model": "qwen3.8-27b",
     "messages": [
       { "role": "user", "content": "Hello!" }
     ]
@@ -408,7 +413,7 @@ from openai import OpenAI
 
 # 1. Discover hosts for the model
 models = httpx.get("https://api.libertai.io/libertai/models").json()
-host = models["hermes-3-8b-tee"]["servers"][0]
+host = models["qwen3.8-27b"]["servers"][0]
 
 # 2. Point the OpenAI client straight at the host
 client = OpenAI(
@@ -417,7 +422,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="hermes-3-8b-tee",
+    model="qwen3.8-27b",
     messages=[{"role": "user", "content": "Hello!"}],
 )
 
@@ -430,7 +435,7 @@ import OpenAI from "openai";
 
 // 1. Discover hosts for the model
 const models = await fetch("https://api.libertai.io/libertai/models").then(r => r.json());
-const host = models["hermes-3-8b-tee"].servers[0];
+const host = models["qwen3.8-27b"].servers[0];
 
 // 2. Point the OpenAI client straight at the host
 const client = new OpenAI({
@@ -439,7 +444,7 @@ const client = new OpenAI({
 });
 
 const completion = await client.chat.completions.create({
-  model: "hermes-3-8b-tee",
+  model: "qwen3.8-27b",
   messages: [{ role: "user", content: "Hello!" }],
 });
 
@@ -447,6 +452,49 @@ console.log(completion.choices[0].message.content);
 ```
 
 :::
+
+### Confidential models
+
+A 🔒 model's `servers` entry is a `tee://<item hash>` rather than a URL, because a confidential deployment has no
+stable address: the node assigns a fresh port on every boot, and the certificate is regenerated each time. The
+verifying clients resolve the hash, attest the enclave and pin the certificate they proved, then hand you an HTTP
+client:
+
+:::tabs
+
+== Python
+```python
+from openai import OpenAI
+from libertai_confidential import connect
+
+tee = connect(model="qwen3.8-27b-tee")
+client = OpenAI(api_key="YOUR_API_KEY", base_url=tee.base_url, http_client=tee.http_client)
+
+completion = client.chat.completions.create(
+    model="qwen3.8-27b-tee",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+```
+
+== TypeScript
+```ts
+import OpenAI from "openai";
+import { connect } from "@libertai/confidential-inference";
+
+const tee = await connect({ model: "qwen3.8-27b-tee" });
+const client = new OpenAI({ apiKey: "YOUR_API_KEY", baseURL: tee.baseURL, fetch: tee.fetch });
+
+const completion = await client.chat.completions.create({
+  model: "qwen3.8-27b-tee",
+  messages: [{ role: "user", content: "Hello!" }],
+});
+```
+
+:::
+
+Your API key still applies — it is checked inside the enclave — and attestation happens before the first byte of
+your request is written, so a server that fails verification is never sent a prompt. See
+[Trust model & TEE](/concepts/trust-model.html) for what each check establishes.
 
 ### Things to know
 
@@ -456,8 +504,8 @@ console.log(completion.choices[0].message.content);
 - **Hosts can change** — the `servers` list reflects the network's current state. Re-query `/libertai/models`
   periodically rather than hardcoding URLs.
 - **TEE confidentiality** — for models running in a TEE (look for `🔒` on the [models list](./index.md#available-models)),
-  calling the host directly minimizes the parties that see your prompt. See [Trust model & TEE](/concepts/trust-model)
-  for what's guaranteed today and how remote attestation will work.
+  calling the enclave directly removes every party but the enclave itself, LibertAI included, and lets your client
+  verify the hardware before it sends anything. See [Trust model & TEE](/concepts/trust-model.html).
 
 ## Verifying your API key
 

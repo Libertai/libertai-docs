@@ -76,7 +76,9 @@ const deprecated = ref<z.infer<typeof RedirectionSchema>[]>([])
 
 onMounted(async () => {
   try {
-    const r = await fetch('https://api2.aleph.im/api/v0/aggregates/0xe1F7220D201C64871Cefb25320a8a588393eE508.json?keys=LTAI_PRICING')
+    // The address the API itself reads its catalog from, so this table cannot
+    // show a model, a price or a deprecation the API does not have.
+    const r = await fetch('https://api2.aleph.im/api/v0/aggregates/0x238224C744F4b90b4494516e074D2676ECfC6803.json?keys=LTAI_PRICING')
     const data = AlephResponseSchema.parse(await r.json())
     models.value = data.data.LTAI_PRICING.models.filter(m => m.capabilities[props.category])
     deprecated.value = data.data.LTAI_PRICING.redirections
