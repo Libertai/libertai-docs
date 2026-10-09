@@ -346,10 +346,15 @@ print(msg.content[0].text)
 
 ## Direct model interaction
 
-You can bypass the `api.libertai.io` load balancer and call a model's CRN (computing resource node) directly.
-This is useful when you want as few intermediaries as possible — for data confidentiality, latency, or to talk to a
-specific instance such as one running in a Trusted Execution Environment. See
-[Trust model & TEE](/concepts/trust-model) for what each layer protects against.
+You can bypass the `api.libertai.io` load balancer and talk to the machine serving a model, which cuts a hop and
+removes us from the path. How you do that depends on the model:
+
+- **An ordinary model** is a host you call like any other HTTPS endpoint — [Call a host directly](#call-a-host-directly).
+- **A 🔒 confidential model** has no stable host, and you want to verify the hardware before sending anything, so it
+  takes a verifying client — [Confidential models](#confidential-models).
+
+Either way you lose the gateway's health-aware routing, and only the confidential path lets you check what you are
+talking to. [Trust model & TEE](/concepts/trust-model.html) covers what each layer protects against.
 
 ### Discover the hosts for a model
 
