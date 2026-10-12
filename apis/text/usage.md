@@ -373,7 +373,7 @@ curl https://api.libertai.io/libertai/models
     ]
   },
   "qwen3.8-27b-tee": {
-    "servers": ["tee://a41744d4be9ac87b729608d3f22e35aa53081513de7d58a974c1a874d2e7b560"]
+    "servers": ["tee://78c1ca196dc9c7f4b90bf3d25cd34d282ffcd6ce6b0d5d15be28be20da7cd974"]
   },
   "z-image-turbo": {
     "servers": ["https://z-image-turbo-1.models.libertai.io"]
