@@ -4,6 +4,8 @@ import { z } from 'zod'
 
 const props = defineProps<{
   category: 'text' | 'image' | 'search' | 'embedding' | 'audio'
+  // One summary table, no headings, cards or deprecations; text only.
+  compact?: boolean
 }>()
 
 const TextCapsSchema = z.object({
@@ -91,12 +93,40 @@ onMounted(async () => {
 })
 
 const noModels = computed(() => !loading.value && !error.value && models.value.length === 0)
+
+const byPrice = computed(() => [...models.value].sort((a, b) =>
+  (a.pricing.text?.price_per_million_input_tokens ?? 0) - (b.pricing.text?.price_per_million_input_tokens ?? 0)
+  || (a.pricing.text?.price_per_million_output_tokens ?? 0) - (b.pricing.text?.price_per_million_output_tokens ?? 0)))
+
+function ctx(n: number): string {
+  return n >= 1_000_000 ? `${+(n / 1_000_000).toFixed(1)}M` : `${Math.round(n / 1000)}k`
+}
+
+function caps(m: z.infer<typeof ModelSchema>): string {
+  const t = m.capabilities.text
+  if (!t) return ''
+  return [t.vision && 'vision', t.function_calling && 'tools', t.tee && 'TEE 🔒'].filter(Boolean).join(', ')
+}
 </script>
 
 <template>
   <div v-if="loading" class="mp-state">Loading models & pricing…</div>
   <div v-else-if="error" class="mp-state mp-error">Failed to load models & pricing.</div>
   <div v-else-if="noModels" class="mp-state">No data available.</div>
+
+  <div v-else-if="compact" class="mp-table-wrap">
+    <table class="mp-table">
+      <thead><tr><th>Model</th><th>Input / output (per M tokens)</th><th>Context</th><th>Capabilities</th></tr></thead>
+      <tbody>
+        <tr v-for="m in byPrice" :key="m.id">
+          <td><code>{{ m.id }}</code></td>
+          <td>{{ m.pricing.text ? `$${m.pricing.text.price_per_million_input_tokens.toFixed(2)} / $${m.pricing.text.price_per_million_output_tokens.toFixed(2)}` : '—' }}</td>
+          <td>{{ m.capabilities.text ? ctx(m.capabilities.text.context_window) : '—' }}</td>
+          <td>{{ caps(m) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <template v-else>
     <h2 id="available-models">Available models</h2>

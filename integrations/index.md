@@ -39,14 +39,7 @@ Recommended default for coding agents: `qwen3.5-122b-a10b` (262k context, vision
 `qwen3.6-35b-a3b`. Flagship: `glm-5.3` (`glm-5.3-flash` is the cheap, 524k-context variant). For confidential
 inference in a Trusted Execution Environment: `qwen3.8-27b-tee`.
 
-| Model | Input / output (per M tokens) | Context | Capabilities |
-|-------|-------------------------------|--------:|--------------|
-| `qwen3.6-35b-a3b` | $0.15 / $0.50 | 262k | vision, tools |
-| `qwen3.8-27b` | $0.15 / $0.50 | 262k | vision, tools |
-| `glm-5.3-flash` | $0.15 / $0.50 | 524k | vision, tools |
-| `qwen3.5-122b-a10b` | $0.25 / $1.75 | 262k | vision, tools |
-| `deepseek-v4.1-flash` | $0.25 / $1.75 | 262k | vision, tools |
-| `glm-5.3` | $1.40 / $4.40 | 262k | tools |
+<ModelsPricing category="text" compact />
 
 Thinking variants exist with a `-thinking` suffix (for example `qwen3.8-27b-thinking`). The live, authoritative list
 with current pricing is on the [Text API page](/apis/text/#available-models), or via `GET /v1/models`.
