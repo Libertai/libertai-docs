@@ -37,11 +37,10 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 Recommended default for coding agents: `qwen3.5-122b-a10b` (262k context, vision, tools). Budget option:
 `qwen3.6-35b-a3b`. Flagship: `glm-5.3` (`glm-5.3-flash` is the cheap, 524k-context variant). For confidential
-inference in a Trusted Execution Environment: `hermes-3-8b-tee` (note the 16k context).
+inference in a Trusted Execution Environment: `qwen3.8-27b-tee`.
 
 | Model | Input / output (per M tokens) | Context | Capabilities |
 |-------|-------------------------------|--------:|--------------|
-| `hermes-3-8b-tee` | $0.15 / $0.60 | 16k | tools, TEE 🔒 |
 | `qwen3.6-35b-a3b` | $0.15 / $0.50 | 262k | vision, tools |
 | `qwen3.8-27b` | $0.15 / $0.50 | 262k | vision, tools |
 | `glm-5.3-flash` | $0.15 / $0.50 | 524k | vision, tools |
