@@ -17,9 +17,9 @@ Continue is configured through `config.yaml` (`~/.continue/config.yaml`, or open
 
 ```yaml
 models:
-  - name: LibertAI Qwen 3.5 122B
+  - name: LibertAI DeepSeek V4.1 Flash
     provider: openai
-    model: qwen3.5-122b-a10b
+    model: deepseek-v4.1-flash-1017
     apiBase: https://api.libertai.io/v1
     apiKey: YOUR_API_KEY
     roles:
@@ -49,5 +49,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding (262k context, vision, tools). See the full
+`deepseek-v4.1-flash-1017` is the recommended default for coding (1M context, vision, tools). See the full
 [model and pricing table](./index.md#models) for budget and TEE options.

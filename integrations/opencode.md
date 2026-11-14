@@ -39,8 +39,8 @@ OpenCode ignores `OPENAI_*` environment variables for custom providers; it needs
         "apiKey": "{env:LIBERTAI_API_KEY}"
       },
       "models": {
-        "qwen3.5-122b-a10b": {
-          "name": "Qwen 3.5 122B"
+        "deepseek-v4.1-flash-1017": {
+          "name": "DeepSeek V4.1 Flash"
         },
         "qwen3.6-35b-a3b": {
           "name": "Qwen 3.6 35B A3B"
@@ -54,7 +54,7 @@ OpenCode ignores `OPENAI_*` environment variables for custom providers; it needs
 Then launch with the key in the environment:
 
 ```sh
-LIBERTAI_API_KEY=YOUR_API_KEY opencode --model libertai/qwen3.5-122b-a10b
+LIBERTAI_API_KEY=YOUR_API_KEY opencode --model libertai/deepseek-v4.1-flash-1017
 ```
 
 ## Verify it works
@@ -74,5 +74,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding agents (262k context, vision, tools). Add any model id from
+`deepseek-v4.1-flash-1017` is the recommended default for coding agents (1M context, vision, tools). Add any model id from
 the [model and pricing table](./index.md#models) to the `models` map and select it with `--model libertai/<id>`.

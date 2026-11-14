@@ -45,7 +45,7 @@ Notes:
 
 - The base URL is `https://api.libertai.io` without the `/v1` suffix; Claude Code appends `/v1/messages` itself.
 - The three `ANTHROPIC_DEFAULT_*_MODEL` variables map Claude Code's model tiers to LibertAI model ids. Substitute any
-  model from the [model table](./index.md#models), for example `ANTHROPIC_DEFAULT_OPUS_MODEL=qwen3.5-122b-a10b` for
+  model from the [model table](./index.md#models), for example `ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4.1-flash-1017` for
   the strongest coding model.
 - The `CLAUDE_CODE_*` and `DISABLE_TELEMETRY` variables turn off nonessential traffic to Anthropic. They are optional
   but recommended.
@@ -68,5 +68,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding agents (262k context, vision, tools). See the full
+`deepseek-v4.1-flash-1017` is the recommended default for coding agents (1M context, vision, tools). See the full
 [model and pricing table](./index.md#models) for budget and TEE options.

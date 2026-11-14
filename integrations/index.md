@@ -35,7 +35,7 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-Recommended default for coding agents: `qwen3.5-122b-a10b` (262k context, vision, tools). Budget option:
+Recommended default for coding agents: `deepseek-v4.1-flash-1017` (1M context, vision, tools). Budget option:
 `qwen3.6-35b-a3b`. Flagship: `glm-5.3` (`glm-5.3-flash` is the cheap, 524k-context variant). For confidential
 inference in a Trusted Execution Environment: `qwen3.8-27b-tee`.
 

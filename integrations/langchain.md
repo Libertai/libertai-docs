@@ -19,7 +19,7 @@ from langchain_openai import ChatOpenAI
 llm = ChatOpenAI(
     base_url="https://api.libertai.io/v1",
     api_key="YOUR_API_KEY",
-    model="qwen3.5-122b-a10b",
+    model="deepseek-v4.1-flash-1017",
 )
 
 print(llm.invoke("In one sentence: what is decentralized inference?").content)
@@ -38,7 +38,7 @@ from llama_index.llms.openai_like import OpenAILike
 llm = OpenAILike(
     api_base="https://api.libertai.io/v1",
     api_key="YOUR_API_KEY",
-    model="qwen3.5-122b-a10b",
+    model="deepseek-v4.1-flash-1017",
     is_chat_model=True,
     is_function_calling_model=True,
     context_window=262144,
@@ -62,5 +62,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is a strong general default (262k context, vision, tools). See the full
+`deepseek-v4.1-flash-1017` is a strong general default (1M context, vision, tools). See the full
 [model and pricing table](./index.md#models), including the TEE option for confidential workloads.
