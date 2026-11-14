@@ -16,11 +16,11 @@ leave.
 3. Fill in the fields:
    - **Base URL**: `https://api.libertai.io/v1`
    - **API Key**: your LibertAI API key
-   - **Model**: `qwen3.5-122b-a10b`
+   - **Model**: `deepseek-v4.1-flash-1017`
 4. Save.
 
 Roo Code stores provider settings in named configuration profiles, and each mode can use a different profile. A common
-split is `qwen3.5-122b-a10b` for Code and Architect with the cheaper `qwen3.6-35b-a3b` for Ask.
+split is `deepseek-v4.1-flash-1017` for Code and Architect with the cheaper `qwen3.6-35b-a3b` for Ask.
 
 ## Verify it works
 
@@ -39,5 +39,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding agents (262k context, vision, tools). See the full
+`deepseek-v4.1-flash-1017` is the recommended default for coding agents (1M context, vision, tools). See the full
 [model and pricing table](./index.md#models) for budget and TEE options.

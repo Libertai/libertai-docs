@@ -17,11 +17,11 @@ Cline has a built-in "OpenAI Compatible" provider, which is what LibertAI speaks
 3. Fill in the fields:
    - **Base URL**: `https://api.libertai.io/v1`
    - **API Key**: your LibertAI API key
-   - **Model ID**: `qwen3.5-122b-a10b`
+   - **Model ID**: `deepseek-v4.1-flash-1017`
 4. Save (**Done**).
 
 Cline lets Plan and Act modes use different model configurations. If you enable that, you can pair a cheaper model
-such as `qwen3.6-35b-a3b` for planning with `qwen3.5-122b-a10b` for acting.
+such as `qwen3.6-35b-a3b` for planning with `deepseek-v4.1-flash-1017` for acting.
 
 ## Verify it works
 
@@ -40,5 +40,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding agents (262k context, vision, tools). See the full
+`deepseek-v4.1-flash-1017` is the recommended default for coding agents (1M context, vision, tools). See the full
 [model and pricing table](./index.md#models) for budget and TEE options.

@@ -264,7 +264,7 @@ asyncio.run(main())
 
 ::: tip
 Pick a model that supports function calling (⚙️ on the [models list](/apis/text/#available-models)). Most
-production agents use `qwen3.6-35b-a3b` or `qwen3.5-122b-a10b`.
+production agents use `qwen3.6-35b-a3b` or `deepseek-v4.1-flash-1017`.
 :::
 
 ## Adding custom tools

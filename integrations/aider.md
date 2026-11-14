@@ -28,11 +28,11 @@ prefix the model id with `openai/`:
 ```sh
 OPENAI_API_BASE=https://api.libertai.io/v1 \
 OPENAI_API_KEY=YOUR_API_KEY \
-aider --model openai/qwen3.5-122b-a10b
+aider --model openai/deepseek-v4.1-flash-1017
 ```
 
 To make it permanent, export the two variables in your shell profile or put them in a `.env` file in your project,
-and set `model: openai/qwen3.5-122b-a10b` in `~/.aider.conf.yml`.
+and set `model: openai/deepseek-v4.1-flash-1017` in `~/.aider.conf.yml`.
 
 ## Verify it works
 
@@ -51,5 +51,5 @@ curl -i https://api.libertai.io/libertai/auth/check \
 
 ## Models
 
-`qwen3.5-122b-a10b` is the recommended default for coding (262k context, tools). Any model id from the
+`deepseek-v4.1-flash-1017` is the recommended default for coding (1M context, tools). Any model id from the
 [model and pricing table](./index.md#models) works with the `openai/` prefix.
