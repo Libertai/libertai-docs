@@ -9,11 +9,11 @@ documented with its own models, pricing, and usage examples.
 | [Image](image/index.md) | Stable Diffusion WebUI and OpenAI images endpoints | ✅ | ✅ |
 | [Embeddings](embeddings/index.md) | Text embeddings for semantic search, RAG, clustering | ✅ | ✅ |
 | [Audio](audio/index.md) | Text-to-speech (TTS) with selectable voices | ✅ | ✅ |
-| [Search](search/index.md) | Multi-engine search + URL fetch for RAG | — | ✅ |
+| [Search](search/index.md) | Multi-engine search + URL fetch for RAG | — | — |
 
 ## Authentication
 
-Two options, interchangeable on every endpoint:
+Two options: API keys work on every endpoint, x402 on every endpoint except Search.
 
 - **API key** — create one in the [Developer console](https://console.libertai.io) and pass it as
   `Authorization: Bearer YOUR_API_KEY`. Verify with [`GET /libertai/auth/check`](text/usage.md#verifying-your-api-key).
