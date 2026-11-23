@@ -527,7 +527,7 @@ curl -i https://api.libertai.io/libertai/auth/check \
 | Status | Meaning | What to do |
 |--------|---------|------------|
 | `401` | Missing or invalid API key | Verify your key in the [Console](https://console.libertai.io) or via `/libertai/auth/check` |
-| `402` | Payment required (x402 flow) | Sign and resubmit with `X-PAYMENT` — see [x402](/apis/x402) |
+| `402` | Payment required (x402 flow) | Sign and resubmit with `PAYMENT-SIGNATURE` — see [x402](/apis/x402) |
 | `404` | Unknown model | Pull the list from `/v1/models` or `/libertai/models` |
 | `422` | Validation error | Check field types and enum values |
 | `503` | All servers failed for this model | Retry shortly — the gateway tried every CRN and none responded |

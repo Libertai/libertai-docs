@@ -10,8 +10,7 @@ Search exposes two endpoints, both served through the main LibertAI gateway:
 **Base URL:** `https://api.libertai.io`
 
 **Authentication:** pass your LibertAI API key as `Authorization: Bearer YOUR_API_KEY` (get one from the
-[Developer console](https://console.libertai.io)). You can also pay per request without an API key via
-[x402 payments](../x402.md).
+[Developer console](https://console.libertai.io)).
 
 ## `POST /search`
 
@@ -299,5 +298,4 @@ for result in response.json()["results"]:
 ## See also
 
 - [Engines & pricing](./index.md)
-- [x402 payments](/apis/x402) — pay per request without an API key
 - [Architecture](/architecture)

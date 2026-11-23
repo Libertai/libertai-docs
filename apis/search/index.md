@@ -14,5 +14,4 @@ You can also use search through [LiberClaw.ai](https://liberclaw.ai), the Libert
 ## See also
 
 - [Search usage](./usage.md) — endpoints, engines, search types, code examples
-- [x402 payments](/apis/x402) — pay per request without an API key
 - [Architecture](/architecture)
